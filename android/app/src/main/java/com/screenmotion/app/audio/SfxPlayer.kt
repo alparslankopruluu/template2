@@ -77,7 +77,7 @@ object SfxPlayer {
                 SfxKind.BUBBLE_POP -> ToneGenerator.TONE_PROP_ACK to 40
                 SfxKind.BIRD_CHIRP -> ToneGenerator.TONE_DTMF_1 to 70
                 SfxKind.WIND_WHOOSH -> ToneGenerator.TONE_CDMA_SOFT_ERROR_LITE to 140
-                SfxKind.APPLY_SUCCESS -> ToneGenerator.TONE_PROP_CONFIRM to 180
+                SfxKind.APPLY_SUCCESS -> ToneGenerator.TONE_PROP_BEEP to 180
             }
 
             main.post {
