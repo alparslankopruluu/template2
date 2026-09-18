@@ -70,7 +70,7 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:text="@string/showcase_hero_tagline_tr"
-                    android:textColor="@color/accent_warm"
+                    android:textColor="@color/accent"
                     android:textSize="13sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -1,7 +1,7 @@
 package com.screenmotion.app.data
 
 /**
- * Per-theme tuning knobs. Canvas-first; OpenGL can map the same values later.
+ * Per-theme tuning knobs. Canvas-first; muted cinematic palette (Apple-inspired).
  */
 data class ThemeConfig(
     val type: ThemeType,
@@ -17,29 +17,29 @@ data class ThemeConfig(
                 type = type,
                 parallaxStrength = 1.35f,
                 particleCount = 160,
-                backgroundTop = 0xFF050510,
-                backgroundBottom = 0xFF1A0A2E
+                backgroundTop = 0xFF050508,
+                backgroundBottom = 0xFF12182A
             )
             ThemeType.AQUARIUM -> ThemeConfig(
                 type = type,
                 parallaxStrength = 0.9f,
                 particleCount = 70,
-                backgroundTop = 0xFF021820,
-                backgroundBottom = 0xFF0A3A4A
+                backgroundTop = 0xFF061418,
+                backgroundBottom = 0xFF0E2A32
             )
             ThemeType.VEHICLE -> ThemeConfig(
                 type = type,
                 parallaxStrength = 1.1f,
                 particleCount = 50,
-                backgroundTop = 0xFF0C0C12,
-                backgroundBottom = 0xFF1A1520
+                backgroundTop = 0xFF0A0A0C,
+                backgroundBottom = 0xFF16161A
             )
             ThemeType.NATURE -> ThemeConfig(
                 type = type,
                 parallaxStrength = 1.25f,
                 particleCount = 90,
-                backgroundTop = 0xFF0A1218,
-                backgroundBottom = 0xFF1A2E24
+                backgroundTop = 0xFF0A1014,
+                backgroundBottom = 0xFF152018
             )
         }
     }

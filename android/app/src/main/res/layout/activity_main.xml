@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,16 +29,16 @@
                     android:id="@+id/titleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:letterSpacing="0.04"
+                    android:letterSpacing="-0.02"
                     android:textColor="@color/text_primary"
-                    android:textSize="28sp"
+                    android:textSize="34sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/subtitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -55,10 +57,10 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:layout_weight="1"
             app:cardBackgroundColor="@color/bg_card"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
             app:strokeColor="@color/stroke"
             app:strokeWidth="1dp">
@@ -72,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:text="@string/choose_theme"
             android:textColor="@color/text_secondary"
             android:textSize="13sp" />
@@ -115,10 +117,20 @@
                 android:orientation="horizontal" />
         </HorizontalScrollView>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHuaweiGuide"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/huawei_guide_button"
+            android:textAllCaps="false"
+            android:textColor="@color/accent"
+            android:textSize="13sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
@@ -131,19 +143,21 @@
                 android:layout_weight="1"
                 android:text="@string/showcase"
                 android:textAllCaps="false"
-                app:cornerRadius="14dp"
-                app:strokeColor="@color/accent" />
+                android:textColor="@color/accent"
+                app:cornerRadius="16dp"
+                app:strokeColor="@color/accent"
+                app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSetWallpaper"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1.25"
                 android:text="@string/set_as_wallpaper"
                 android:textAllCaps="false"
                 android:textSize="15sp"
                 app:backgroundTint="@color/accent"
-                app:cornerRadius="14dp" />
+                app:cornerRadius="16dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -151,7 +165,7 @@
         android:id="@+id/onboardingOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F008080F"
+        android:background="#E6000000"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone">
@@ -168,9 +182,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:letterSpacing="-0.02"
                 android:text="@string/onboarding_title"
                 android:textColor="@color/text_primary"
-                android:textSize="24sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -234,7 +249,7 @@
                 android:layout_marginTop="22dp"
                 android:text="@string/onboarding_got_it"
                 android:textAllCaps="false"
-                app:backgroundTint="@color/accent_warm"
+                app:backgroundTint="@color/accent"
                 app:cornerRadius="14dp" />
         </LinearLayout>
     </FrameLayout>

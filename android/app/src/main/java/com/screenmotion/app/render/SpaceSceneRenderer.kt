@@ -84,7 +84,7 @@ class SpaceSceneRenderer : SceneRenderer {
             )
         }
         planets += Planet(0.22f, 0.28f, 38f, 0xFF6B8CFF.toInt(), true, 0.4f)
-        planets += Planet(0.78f, 0.55f, 22f, 0xFFFF8FA3.toInt(), false, 0.7f)
+        planets += Planet(0.78f, 0.55f, 22f, 0xFFC8A0A8.toInt(), false, 0.7f)
         planets += Planet(0.55f, 0.18f, 14f, 0xFFFFD580.toInt(), false, 0.25f)
         shipVisible = 0f
         idleShip = 0.55f
@@ -239,7 +239,7 @@ class SpaceSceneRenderer : SceneRenderer {
         val cy = h * 0.35f + motion.tiltY * 20f
         nebulaPaint.shader = RadialGradient(
             cx, cy, w * 0.45f,
-            ColorUtils.withAlpha(0xFF4A2080.toInt(), 60),
+            ColorUtils.withAlpha(0xFF2A3A58.toInt(), 60),
             Color.TRANSPARENT,
             Shader.TileMode.CLAMP
         )
@@ -265,7 +265,7 @@ class SpaceSceneRenderer : SceneRenderer {
         // Engine glow pulse
         glowPaint.shader = RadialGradient(
             0f, 30f, 40f,
-            ColorUtils.withAlpha(0xFF44DDFF.toInt(), (a * 0.75f).toInt()),
+            ColorUtils.withAlpha(0xFF6AA8C8.toInt(), (a * 0.75f).toInt()),
             Color.TRANSPARENT,
             Shader.TileMode.CLAMP
         )
@@ -306,7 +306,7 @@ class SpaceSceneRenderer : SceneRenderer {
         }
 
         // Wing lights
-        shipPaint.color = ColorUtils.withAlpha(0xFFFF6688.toInt(), a)
+        shipPaint.color = ColorUtils.withAlpha(0xFFC08090.toInt(), a)
         canvas.drawCircle(-16f, 10f, 3.5f, shipPaint)
         canvas.drawCircle(16f, 10f, 3.5f, shipPaint)
         canvas.restore()

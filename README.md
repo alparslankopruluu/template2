@@ -1,6 +1,6 @@
 # ScreenMotion
 
-Interactive live wallpaper — tilt, touch, particles, expressive mascots. Dark cinematic UI.
+Interactive live wallpaper — tilt, touch, particles, expressive mascots. Apple-inspired graphite UI (system blue #0A84FF).
 
 **Themes:** Space · Aquarium · Vehicle (4 variants) · Nature
 
@@ -10,7 +10,7 @@ Target repo: `https://github.com/alparslankopruluu/template2`
 
 ## English
 
-### What’s new (v3)
+### What’s new (v4)
 - **Sound effects** — lightweight procedural SFX (theme select, touch splash, boost, meteor, bubble pop, bird/wind, apply success). Mute toggle persists. Fails silently if audio unavailable.
 - **Vehicle variants** — sports car, truck, motorcycle, helicopter; chip picker in Vehicle theme; distinct silhouettes, trail colors, boost behavior.
 - **Store Showcase** — in-app marketing screen (hero EN+TR, feature highlights, theme gallery). Listing copy under `store/` (Play + App Store, EN+TR). Optional mock frames in `assets/store_mock/`.
@@ -24,7 +24,8 @@ Target repo: `https://github.com/alparslankopruluu/template2`
 2. **Sounds:** tap themes / preview / Set wallpaper; mute with the speaker icon (top-right). Preference persists.
 3. **Vehicle picker:** choose **Vehicle** theme → chip row appears (Sports / Truck / Bike / Heli). Swipe for boost; each type looks/feels different.
 4. **Showcase:** tap **Showcase** for store-style hero + features + gallery.
-5. **Live wallpaper:** **Set as live wallpaper** (success tone if unmuted).
+5. **Live wallpaper + lock:** **Set wallpaper** opens live chooser (Home) and applies FLAG_LOCK static frame; Huawei guide sheet follows.
+6. **Huawei guide:** tap **Huawei / Honor lock guide** anytime.
 
 ### iOS — open, run, try v3
 1. Open `ios/ScreenMotion.xcodeproj` → set Team → Run (device for tilt).
@@ -47,7 +48,7 @@ screenmotion/
 
 ## Türkçe
 
-### Bu sürümde neler var (v3)
+### Bu sürümde neler var (v4)
 - **Ses efektleri** — hafif prosedürel SFX; sessize alma kaydedilir; ses yoksa sessizce geçilir.
 - **Araç varyantları** — spor araba, kamyon, motor, helikopter; Vehicle temasında çip seçici.
 - **Mağaza Vitrini** — uygulama içi hero (TR+EN), özellikler, tema galerisi. Metinler `store/` altında.
@@ -61,7 +62,8 @@ screenmotion/
 2. **Ses:** tema / önizleme / duvar kağıdı; sağ üstteki hoparlör ile sessiz.
 3. **Araç seçici:** Vehicle teması → Sports / Truck / Bike / Heli çipleri; kaydırınca boost.
 4. **Vitrin:** **Showcase / Vitrin** düğmesi.
-5. **Canlı duvar kağıdı:** sistem seçiciden onaylayın.
+5. **Canlı + kilit:** **Duvar kağıdı yap** ana ekran canlı seçiciyi açar ve kilit için statik kare atar; ardından Huawei rehberi gelir.
+6. **Huawei rehberi:** **Huawei / Honor kilit rehberi** düğmesi.
 
 ### iOS — v3’ü deneme
 1. `ios/ScreenMotion.xcodeproj` → Team → Run.
@@ -80,12 +82,13 @@ screenmotion/
 ---
 
 ## Architecture notes
-- Android: `SfxPlayer` (ToneGenerator) + `ConfigRepository` mute/vehicle prefs; `VehicleType` + `VehicleSceneRenderer` variants; `ShowcaseActivity`.
+- Android: `LockWallpaperApplier` (render/static → FLAG_LOCK + picker fallback) + `HuaweiLockGuideSheet`; `VehiclePainter` (3D Canvas + PNG sprites in `assets/themes/vehicles/`); vehicle chip thumbs; `SfxPlayer` + `ConfigRepository`; `ShowcaseActivity`.
 - iOS: `SoundEffects` (procedural WAV via AVAudioPlayer) + `AppSettings`; `VehicleType` + `VehicleScene`; `ShowcaseView`.
 - SharedPreferences / UserDefaults: theme, vehicle, onboarding, soundMuted.
 - Procedural drawing + procedural audio (no heavy binary SFX packs).
 
 ## Limitations
+- On many Huawei/Honor devices live wallpaper cannot drive the lock screen or AOD “Tam ekran”; static FLAG_LOCK is required.
 - Android Gradle wrapper JAR may need Studio to generate.
 - iOS cannot host realtime interactive system wallpapers; preview + export/tutorial remain the path.
 - ToneGenerator / generated tones are intentionally simple, not studio-quality samples.

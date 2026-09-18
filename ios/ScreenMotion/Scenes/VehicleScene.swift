@@ -15,8 +15,8 @@ enum VehicleScene {
             Path(rect),
             with: .linearGradient(
                 Gradient(colors: [
-                    Color(red: 0.05, green: 0.05, blue: 0.07),
-                    Color(red: 0.16, green: 0.09, blue: 0.22)
+                    Color(red: 0.04, green: 0.04, blue: 0.05),
+                    Color(red: 0.09, green: 0.09, blue: 0.10)
                 ]),
                 startPoint: .zero,
                 endPoint: CGPoint(x: 0, y: size.height * 0.5)
@@ -155,7 +155,7 @@ enum VehicleScene {
         body.move(to: CGPoint(x: -34, y: 10)); body.addLine(to: CGPoint(x: -30, y: -4)); body.addLine(to: CGPoint(x: -14, y: -20))
         body.addLine(to: CGPoint(x: 8, y: -22)); body.addLine(to: CGPoint(x: 30, y: -6)); body.addLine(to: CGPoint(x: 36, y: 10))
         body.addLine(to: CGPoint(x: 28, y: 18)); body.addLine(to: CGPoint(x: -28, y: 18)); body.closeSubpath()
-        ctx.fill(body, with: .color(boosting ? Color(red: 1, green: 0.18, blue: 0.42) : vehicle.bodyColor))
+        ctx.fill(body, with: .color(boosting ? Color(red: 0.69, green: 0.44, blue: 0.50) : vehicle.bodyColor))
         ctx.fill(Path(ellipseIn: CGRect(x: -40, y: 0, width: 80, height: 40)), with: .color(vehicle.trailColor.opacity(0.3)))
         var cabin = Path()
         cabin.move(to: CGPoint(x: -10, y: -4)); cabin.addLine(to: CGPoint(x: -4, y: -18)); cabin.addLine(to: CGPoint(x: 10, y: -18)); cabin.addLine(to: CGPoint(x: 14, y: -4)); cabin.closeSubpath()
@@ -193,7 +193,7 @@ enum VehicleScene {
         var tank = Path()
         tank.move(to: CGPoint(x: -14, y: 6)); tank.addLine(to: CGPoint(x: -6, y: -14)); tank.addLine(to: CGPoint(x: 10, y: -12))
         tank.addLine(to: CGPoint(x: 16, y: 4)); tank.addLine(to: CGPoint(x: 4, y: 10)); tank.addLine(to: CGPoint(x: -10, y: 10)); tank.closeSubpath()
-        ctx.fill(tank, with: .color(boosting ? Color(red: 1, green: 0.27, blue: 0.67) : vehicle.bodyColor))
+        ctx.fill(tank, with: .color(boosting ? Color(red: 0.69, green: 0.47, blue: 0.56) : vehicle.bodyColor))
         ctx.fill(Path(ellipseIn: CGRect(x: -7, y: -25, width: 14, height: 14)), with: .color(Color(red: 0.1, green: 0.08, blue: 0.12)))
         ctx.fill(Path(roundedRect: CGRect(x: -6, y: -12, width: 14, height: 16), cornerRadius: 3), with: .color(Color(red: 0.1, green: 0.08, blue: 0.12)))
         var bar = Path(); bar.move(to: CGPoint(x: 8, y: -10)); bar.addLine(to: CGPoint(x: 20, y: -18))
@@ -208,7 +208,7 @@ enum VehicleScene {
         cabin.addQuadCurve(to: CGPoint(x: 0, y: -22), control: CGPoint(x: -24, y: -18))
         cabin.addQuadCurve(to: CGPoint(x: 22, y: 4), control: CGPoint(x: 18, y: -16))
         cabin.addLine(to: CGPoint(x: 14, y: 14)); cabin.addLine(to: CGPoint(x: -14, y: 14)); cabin.closeSubpath()
-        ctx.fill(cabin, with: .color(boosting ? Color(red: 0.53, green: 1, blue: 0.73) : vehicle.bodyColor))
+        ctx.fill(cabin, with: .color(boosting ? Color(red: 0.48, green: 0.67, blue: 0.54) : vehicle.bodyColor))
         ctx.fill(Path(ellipseIn: CGRect(x: -10, y: -16, width: 22, height: 18)), with: .color(Color(red: 0.06, green: 0.12, blue: 0.09).opacity(0.7)))
         ctx.fill(Path(roundedRect: CGRect(x: -48, y: -4, width: 30, height: 8), cornerRadius: 3), with: .color(vehicle.bodyColor))
         ctx.fill(Path(CGRect(x: -50, y: -12, width: 6, height: 22)), with: .color(vehicle.bodyColor))

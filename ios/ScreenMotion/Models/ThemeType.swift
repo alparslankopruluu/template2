@@ -38,10 +38,10 @@ enum ThemeType: String, CaseIterable, Identifiable {
 
     var gradient: [Color] {
         switch self {
-        case .space: return [Color(red: 0.02, green: 0.02, blue: 0.06), Color(red: 0.10, green: 0.04, blue: 0.18)]
-        case .aquarium: return [Color(red: 0.01, green: 0.09, blue: 0.12), Color(red: 0.04, green: 0.23, blue: 0.29)]
-        case .vehicle: return [Color(red: 0.05, green: 0.05, blue: 0.07), Color(red: 0.10, green: 0.08, blue: 0.12)]
-        case .nature: return [Color(red: 0.04, green: 0.07, blue: 0.09), Color(red: 0.10, green: 0.18, blue: 0.14)]
+        case .space: return [Color(red: 0.02, green: 0.02, blue: 0.03), Color(red: 0.07, green: 0.09, blue: 0.16)]
+        case .aquarium: return [Color(red: 0.02, green: 0.08, blue: 0.09), Color(red: 0.05, green: 0.16, blue: 0.20)]
+        case .vehicle: return [Color(red: 0.04, green: 0.04, blue: 0.05), Color(red: 0.09, green: 0.09, blue: 0.10)]
+        case .nature: return [Color(red: 0.04, green: 0.06, blue: 0.08), Color(red: 0.08, green: 0.12, blue: 0.09)]
         }
     }
 }
@@ -74,19 +74,19 @@ enum VehicleType: String, CaseIterable, Identifiable {
 
     var trailColor: Color {
         switch self {
-        case .sportsCar: return Color(red: 0, green: 0.94, blue: 1)
-        case .truck: return Color(red: 1, green: 0.67, blue: 0.2)
-        case .motorcycle: return Color(red: 1, green: 0.18, blue: 0.58)
-        case .helicopter: return Color(red: 0.53, green: 1, blue: 0.67)
+        case .sportsCar: return Color(red: 0.36, green: 0.64, blue: 0.85)
+        case .truck: return Color(red: 0.83, green: 0.65, blue: 0.45)
+        case .motorcycle: return Color(red: 0.77, green: 0.48, blue: 0.54)
+        case .helicopter: return Color(red: 0.48, green: 0.67, blue: 0.54)
         }
     }
 
     var bodyColor: Color {
         switch self {
-        case .sportsCar: return Color(red: 0.18, green: 0.9, blue: 1)
-        case .truck: return Color(red: 1, green: 0.53, blue: 0.27)
-        case .motorcycle: return Color(red: 0.88, green: 0.25, blue: 0.98)
-        case .helicopter: return Color(red: 0.4, green: 0.93, blue: 0.6)
+        case .sportsCar: return Color(red: 0.48, green: 0.72, blue: 0.88)
+        case .truck: return Color(red: 0.77, green: 0.54, blue: 0.35)
+        case .motorcycle: return Color(red: 0.66, green: 0.41, blue: 0.56)
+        case .helicopter: return Color(red: 0.42, green: 0.61, blue: 0.48)
         }
     }
 

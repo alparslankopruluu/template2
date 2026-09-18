@@ -4,14 +4,14 @@ enum AquariumScene {
     private static let fishData: [(CGFloat, CGFloat, CGFloat, Color)] = {
         var rng = SeededRNG(seed: 7)
         let colors: [Color] = [
-            Color(red: 1, green: 0.42, blue: 0.42),
-            Color(red: 1, green: 0.85, blue: 0.24),
-            Color(red: 0.42, green: 0.8, blue: 0.47),
-            Color(red: 0.3, green: 0.59, blue: 1),
-            Color(red: 1, green: 0.55, blue: 0.26),
-            Color(red: 0.88, green: 0.34, blue: 0.99),
-            Color(red: 0.5, green: 0.86, blue: 0.85),
-            Color(red: 1, green: 0.62, blue: 0.95)
+            Color(red: 0.82, green: 0.50, blue: 0.50),
+            Color(red: 0.83, green: 0.72, blue: 0.42),
+            Color(red: 0.42, green: 0.61, blue: 0.48),
+            Color(red: 0.36, green: 0.54, blue: 0.72),
+            Color(red: 0.77, green: 0.54, blue: 0.35),
+            Color(red: 0.54, green: 0.48, blue: 0.67),
+            Color(red: 0.42, green: 0.61, blue: 0.60),
+            Color(red: 0.69, green: 0.53, blue: 0.63)
         ]
         return (0..<10).map { i in
             (rng.next(), 0.15 + rng.next() * 0.55, 16 + rng.next() * 26, colors[i % colors.count])

@@ -38,7 +38,7 @@ enum SpaceScene {
 
         // Planets (parallax accents)
         drawPlanet(context: context, at: CGPoint(x: size.width * 0.22 + tiltX * 24, y: size.height * 0.28 + tiltY * 16), r: 38, color: Color(red: 0.42, green: 0.55, blue: 1), ring: true)
-        drawPlanet(context: context, at: CGPoint(x: size.width * 0.78 + tiltX * 14, y: size.height * 0.55 + tiltY * 10), r: 22, color: Color(red: 1, green: 0.56, blue: 0.64), ring: false)
+        drawPlanet(context: context, at: CGPoint(x: size.width * 0.78 + tiltX * 14, y: size.height * 0.55 + tiltY * 10), r: 22, color: Color(red: 0.78, green: 0.63, blue: 0.66), ring: false)
         drawPlanet(context: context, at: CGPoint(x: size.width * 0.55 + tiltX * 30, y: size.height * 0.18 + tiltY * 20), r: 14, color: Color(red: 1, green: 0.84, blue: 0.5), ring: false)
 
         for s in starSeed {
@@ -154,8 +154,8 @@ enum SpaceScene {
         smile.move(to: CGPoint(x: -3, y: -4))
         smile.addQuadCurve(to: CGPoint(x: 3, y: -4), control: CGPoint(x: 0, y: -1))
         ctx.stroke(smile, with: .color(.black.opacity(0.7)), lineWidth: 1.3)
-        ctx.fill(Path(ellipseIn: CGRect(x: -19, y: 7, width: 7, height: 7)), with: .color(Color(red: 1, green: 0.4, blue: 0.53)))
-        ctx.fill(Path(ellipseIn: CGRect(x: 12, y: 7, width: 7, height: 7)), with: .color(Color(red: 1, green: 0.4, blue: 0.53)))
+        ctx.fill(Path(ellipseIn: CGRect(x: -19, y: 7, width: 7, height: 7)), with: .color(Color(red: 0.75, green: 0.50, blue: 0.56)))
+        ctx.fill(Path(ellipseIn: CGRect(x: 12, y: 7, width: 7, height: 7)), with: .color(Color(red: 0.75, green: 0.50, blue: 0.56)))
     }
 }
 

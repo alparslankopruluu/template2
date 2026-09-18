@@ -53,9 +53,9 @@ class AquariumSceneRenderer : SceneRenderer {
     private var idlePulse = 0f
 
     private val fishColors = intArrayOf(
-        0xFFFF6B6B.toInt(), 0xFFFFD93D.toInt(), 0xFF6BCB77.toInt(),
-        0xFF4D96FF.toInt(), 0xFFFF8C42.toInt(), 0xFFE056FD.toInt(),
-        0xFF7FDBDA.toInt(), 0xFFFF9FF3.toInt()
+        0xFFD08080.toInt(), 0xFFD4B86A.toInt(), 0xFF6B9B7A.toInt(),
+        0xFF5B8AB8.toInt(), 0xFFC48A5A.toInt(), 0xFF8A7AAA.toInt(),
+        0xFF6A9B9A.toInt(), 0xFFB088A0.toInt()
     )
 
     override fun onSizeChanged(width: Int, height: Int) {

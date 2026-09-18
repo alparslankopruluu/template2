@@ -42,7 +42,7 @@ struct WallpaperTutorialSheet: View {
                 }
                 .padding(24)
             }
-            .background(Color(red: 0.03, green: 0.03, blue: 0.06))
+            .background(SMColor.bg)
             .navigationTitle("Set wallpaper")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -58,12 +58,12 @@ struct WallpaperTutorialSheet: View {
             Text("\(n)")
                 .font(.headline.monospacedDigit())
                 .frame(width: 32, height: 32)
-                .background(Circle().fill(Color(red: 0.42, green: 0.55, blue: 1)))
+                .background(Circle().fill(SMColor.accent))
             VStack(alignment: .leading, spacing: 4) {
                 Text(titleEN).font(.headline)
-                Text(titleTR).font(.subheadline.weight(.semibold)).foregroundStyle(Color(red: 0.7, green: 0.75, blue: 0.95))
+                Text(titleTR).font(.subheadline.weight(.semibold)).foregroundStyle(SMColor.textSecondary)
                 Text(detailEN).font(.subheadline).foregroundStyle(.secondary)
-                Text(detailTR).font(.caption).foregroundStyle(Color(white: 0.45))
+                Text(detailTR).font(.caption).foregroundStyle(SMColor.textSecondary)
             }
         }
     }

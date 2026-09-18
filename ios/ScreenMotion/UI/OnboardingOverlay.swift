@@ -14,25 +14,25 @@ struct OnboardingOverlay: View {
             Color.black.opacity(0.9).ignoresSafeArea()
             VStack(alignment: .leading, spacing: 14) {
                 Text("Make it move")
-                    .font(.title.bold())
+                    .font(.system(size: 28, weight: .bold))
                     .foregroundStyle(.white)
                 Text("Canlı duvar kağıdı · kısa ipuçları")
                     .font(.caption)
-                    .foregroundStyle(Color(white: 0.5))
+                    .foregroundStyle(SMColor.textSecondary)
 
                 ForEach(Array(tips.enumerated()), id: \.offset) { _, tip in
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: tip.icon)
                             .font(.title3)
-                            .foregroundStyle(Color(red: 0.42, green: 0.55, blue: 1))
+                            .foregroundStyle(SMColor.accent)
                             .frame(width: 28)
                         VStack(alignment: .leading, spacing: 3) {
                             Text(tip.title)
                                 .font(.subheadline.weight(.bold))
-                                .foregroundStyle(Color(red: 0.75, green: 0.8, blue: 1))
+                                .foregroundStyle(SMColor.textPrimary)
                             Text(tip.detail)
                                 .font(.footnote)
-                                .foregroundStyle(Color(white: 0.7))
+                                .foregroundStyle(SMColor.textSecondary)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -41,24 +41,24 @@ struct OnboardingOverlay: View {
 
                 Text("On iOS, interactive wallpapers live in-app — export a clip or follow the tutorial. · iOS’ta etkileşim uygulamada; dışa aktar veya öğreticiyi izle.")
                     .font(.caption2)
-                    .foregroundStyle(Color(white: 0.45))
+                    .foregroundStyle(SMColor.textSecondary)
                     .padding(.top, 4)
 
                 Button("Got it — let's play · Tamam, oynayalım", action: onDismiss)
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
-                    .background(Color(red: 1, green: 0.42, blue: 0.54), in: RoundedRectangle(cornerRadius: 14))
+                    .background(SMColor.accent, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                     .foregroundStyle(.white)
                     .padding(.top, 8)
             }
             .padding(26)
             .background(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12))
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .fill(SMColor.elevated)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 24, style: .continuous)
-                            .stroke(Color.white.opacity(0.08), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 28, style: .continuous)
+                            .stroke(SMColor.stroke, lineWidth: 1)
                     )
             )
             .padding(22)

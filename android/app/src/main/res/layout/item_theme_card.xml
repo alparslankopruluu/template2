@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="120dp"
-    android:layout_height="108dp"
+    android:layout_width="128dp"
+    android:layout_height="112dp"
     android:layout_marginEnd="10dp"
     app:cardBackgroundColor="@color/bg_card"
-    app:cardCornerRadius="18dp"
+    app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
     app:strokeColor="@color/accent"
     app:strokeWidth="0dp">
@@ -15,21 +15,21 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/themeEmoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp" />
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/themeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/text_primary"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -40,6 +40,6 @@
             android:gravity="center"
             android:maxLines="2"
             android:textColor="@color/text_secondary"
-            android:textSize="9sp" />
+            android:textSize="10sp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

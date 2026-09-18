@@ -1,5 +1,16 @@
 import SwiftUI
 
+/// Apple-inspired graphite palette (system blue accent).
+enum SMColor {
+    static let bg = Color.black
+    static let card = Color(red: 0.17, green: 0.17, blue: 0.18) // #2C2C2E
+    static let elevated = Color(red: 0.11, green: 0.11, blue: 0.12) // #1C1C1E
+    static let accent = Color(red: 0.039, green: 0.518, blue: 1.0) // #0A84FF
+    static let textPrimary = Color.white
+    static let textSecondary = Color(red: 0.557, green: 0.557, blue: 0.576) // #8E8E93
+    static let stroke = Color(red: 0.227, green: 0.227, blue: 0.235) // #3A3A3C
+}
+
 struct ContentView: View {
     @EnvironmentObject var settings: AppSettings
     @StateObject private var motion = MotionManager()
@@ -11,9 +22,9 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 0.03, green: 0.03, blue: 0.06).ignoresSafeArea()
+            SMColor.bg.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 16) {
                 header
                 previewCard
                 themePicker
@@ -22,7 +33,8 @@ struct ContentView: View {
                 }
                 actionButtons
             }
-            .padding(20)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
 
             if showOnboarding {
                 OnboardingOverlay {
@@ -55,11 +67,11 @@ struct ContentView: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
                 Text("ScreenMotion")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color(red: 0.95, green: 0.96, blue: 1))
+                    .font(.system(size: 34, weight: .bold, design: .default))
+                    .foregroundStyle(SMColor.textPrimary)
                 Text("Interactive preview · export for wallpaper")
                     .font(.subheadline)
-                    .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
+                    .foregroundStyle(SMColor.textSecondary)
             }
             Spacer()
             Button {
@@ -70,7 +82,7 @@ struct ContentView: View {
             } label: {
                 Image(systemName: settings.soundMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
                     .font(.title3)
-                    .foregroundStyle(Color(red: 0.95, green: 0.96, blue: 1))
+                    .foregroundStyle(SMColor.textPrimary)
                     .opacity(settings.soundMuted ? 0.55 : 1)
                     .frame(width: 40, height: 40)
             }
@@ -85,10 +97,10 @@ struct ContentView: View {
             motion: motion,
             touch: $touch
         )
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Color.white.opacity(0.08), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(SMColor.stroke, lineWidth: 1)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -97,12 +109,12 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Choose a theme · Tema seç")
                 .font(.caption)
-                .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
+                .foregroundStyle(SMColor.textSecondary)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(ThemeType.allCases) { theme in
                         ThemeCard(theme: theme, selected: settings.selectedTheme == theme) {
-                            withAnimation(.spring(response: 0.35, dampingFraction: 0.68)) {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.72)) {
                                 settings.selectedTheme = theme
                                 touch = TouchState()
                             }
@@ -119,12 +131,12 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Vehicle type · Araç tipi")
                 .font(.caption)
-                .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
+                .foregroundStyle(SMColor.textSecondary)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(VehicleType.allCases) { v in
                         Button {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                                 settings.selectedVehicle = v
                             }
                             SoundEffects.shared.play(.themeSelect)
@@ -132,20 +144,20 @@ struct ContentView: View {
                             HStack(spacing: 6) {
                                 Text(v.emoji)
                                 Text(v.rawValue)
-                                    .font(.caption.weight(.bold))
-                                    .foregroundStyle(.white)
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(SMColor.textPrimary)
                             }
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
                             .background(
                                 Capsule()
-                                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12))
+                                    .fill(SMColor.card)
                                     .overlay(
                                         Capsule()
                                             .stroke(
                                                 settings.selectedVehicle == v
-                                                    ? Color(red: 1, green: 0.42, blue: 0.54)
-                                                    : Color.white.opacity(0.08),
+                                                    ? SMColor.accent
+                                                    : SMColor.stroke,
                                                 lineWidth: settings.selectedVehicle == v ? 2 : 1
                                             )
                                     )
@@ -169,10 +181,10 @@ struct ContentView: View {
                     Label("Showcase", systemImage: "sparkles.rectangle.stack")
                         .font(.subheadline.weight(.semibold))
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 14)
                 }
                 .buttonStyle(.bordered)
-                .tint(Color(red: 0.42, green: 0.55, blue: 1))
+                .tint(SMColor.accent)
 
                 Button {
                     showExport = true
@@ -181,10 +193,10 @@ struct ContentView: View {
                     Label("Export", systemImage: "square.and.arrow.up")
                         .font(.subheadline.weight(.semibold))
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 14)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color(red: 0.42, green: 0.55, blue: 1))
+                .tint(SMColor.accent)
             }
 
             Button {
@@ -196,7 +208,7 @@ struct ContentView: View {
                     .padding(.vertical, 12)
             }
             .buttonStyle(.bordered)
-            .tint(Color(red: 1, green: 0.42, blue: 0.54))
+            .tint(SMColor.accent)
         }
     }
 }
@@ -210,7 +222,7 @@ struct ThemeCard: View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 6) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .fill(
                             LinearGradient(colors: theme.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
@@ -219,26 +231,25 @@ struct ThemeCard: View {
                 }
                 Text(theme.rawValue)
                     .font(.caption.weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(SMColor.textPrimary)
                 Text(theme.subtitle)
                     .font(.system(size: 9))
-                    .foregroundStyle(Color(red: 0.65, green: 0.68, blue: 0.8))
+                    .foregroundStyle(SMColor.textSecondary)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(10)
             .frame(width: 128, alignment: .leading)
             .background(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12))
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(SMColor.card)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(selected ? Color(red: 0.42, green: 0.55, blue: 1) : Color.white.opacity(0.06), lineWidth: selected ? 2.5 : 1)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(selected ? SMColor.accent : SMColor.stroke, lineWidth: selected ? 2 : 1)
             )
-            .opacity(selected ? 1 : 0.78)
-            .scaleEffect(selected ? 1.04 : 1)
-            .shadow(color: selected ? Color(red: 0.42, green: 0.55, blue: 1).opacity(0.35) : .clear, radius: 8, y: 2)
+            .opacity(selected ? 1 : 0.82)
+            .scaleEffect(selected ? 1.03 : 1)
         }
         .buttonStyle(.plain)
     }

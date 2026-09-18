@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="lock_cache" path="lock_wallpapers/" />
+    <external-files-path name="lock_ext" path="Pictures/" />
+</paths>

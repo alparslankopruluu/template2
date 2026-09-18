@@ -18,12 +18,20 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /**
- * Vehicle: selectable sports car / truck / motorcycle / helicopter silhouettes,
+ * Vehicle: photorealistic sports car / truck / motorcycle / helicopter (PNG sprites + 3D Canvas fallback),
  * distinct trail colors & boost behavior; tilt lanes + swipe boost.
  */
 class VehicleSceneRenderer(
     private var vehicle: VehicleType = VehicleType.SPORTS_CAR
 ) : SceneRenderer {
+
+    private val painter: VehiclePainter by lazy {
+        try {
+            VehiclePainter(com.screenmotion.app.ScreenMotionApp.instance)
+        } catch (_: Exception) {
+            VehiclePainter(null)
+        }
+    }
 
     private var w = 0
     private var h = 0
@@ -185,7 +193,7 @@ class VehicleSceneRenderer(
         if (w <= 0 || h <= 0) return
         bgPaint.shader = LinearGradient(
             0f, 0f, 0f, h * 0.45f,
-            config.backgroundTop.toInt(), 0xFF2A1838.toInt(),
+            config.backgroundTop.toInt(), 0xFF1A1A22.toInt(),
             Shader.TileMode.CLAMP
         )
         canvas.drawRect(0f, 0f, w.toFloat(), h * 0.5f, bgPaint)
@@ -222,10 +230,10 @@ class VehicleSceneRenderer(
     private fun drawNeonTrail(canvas: Canvas) {
         val primary = vehicle.trailColor.toInt()
         val secondary = when (vehicle) {
-            VehicleType.SPORTS_CAR -> 0xFFFF2D95.toInt()
-            VehicleType.TRUCK -> 0xFFFF6600.toInt()
-            VehicleType.MOTORCYCLE -> 0xFFFFEE55.toInt()
-            VehicleType.HELICOPTER -> 0xFFAAFFDD.toInt()
+            VehicleType.SPORTS_CAR -> 0xFFC47A8A.toInt()
+            VehicleType.TRUCK -> 0xFFC48A5A.toInt()
+            VehicleType.MOTORCYCLE -> 0xFFD4C080.toInt()
+            VehicleType.HELICOPTER -> 0xFF8AB8A0.toInt()
         }
         for (p in trail) {
             val a = (p.life * 180).toInt().coerceIn(0, 180)
@@ -273,7 +281,7 @@ class VehicleSceneRenderer(
         }
         glowPaint.shader = LinearGradient(
             0f, h * 0.4f, 0f, h * 0.52f,
-            ColorUtils.withAlpha(0xFFFF6688.toInt(), 45),
+            ColorUtils.withAlpha(0xFFA87888.toInt(), 45),
             Color.TRANSPARENT,
             Shader.TileMode.CLAMP
         )
@@ -328,240 +336,8 @@ class VehicleSceneRenderer(
         canvas.translate(cx, cy + bob)
         canvas.scale(scale, scale)
 
-        when (vehicle) {
-            VehicleType.SPORTS_CAR -> drawSportsCar(canvas, boosting)
-            VehicleType.TRUCK -> drawTruck(canvas, boosting)
-            VehicleType.MOTORCYCLE -> drawMotorcycle(canvas, boosting)
-            VehicleType.HELICOPTER -> drawHelicopter(canvas, boosting)
-        }
+        painter.draw(canvas, vehicle, boosting, rotor)
 
         canvas.restore()
-    }
-
-    private fun drawSportsCar(canvas: Canvas, boosting: Boolean) {
-        carPaint.color = ColorUtils.withAlpha(Color.BLACK, 90)
-        canvas.drawOval(-40f, 20f, 40f, 32f, carPaint)
-        drawHeadlightBeams(canvas)
-        path.reset()
-        path.moveTo(-34f, 10f)
-        path.lineTo(-30f, -4f)
-        path.lineTo(-14f, -20f)
-        path.lineTo(8f, -22f)
-        path.lineTo(30f, -6f)
-        path.lineTo(36f, 10f)
-        path.lineTo(28f, 18f)
-        path.lineTo(-28f, 18f)
-        path.close()
-        carPaint.color = if (boosting) 0xFFFF2D6A.toInt() else vehicle.bodyColor.toInt()
-        canvas.drawPath(path, carPaint)
-        drawUnderglow(canvas, boosting)
-        carPaint.color = 0xFF121820.toInt()
-        path.reset()
-        path.moveTo(-10f, -4f)
-        path.lineTo(-4f, -18f)
-        path.lineTo(10f, -18f)
-        path.lineTo(14f, -4f)
-        path.close()
-        canvas.drawPath(path, carPaint)
-        drawHeadlights(canvas)
-        if (boosting) drawBoostFlame(canvas)
-        carPaint.color = 0xFF1A1A22.toInt()
-        canvas.drawCircle(-24f, 16f, 8f, carPaint)
-        canvas.drawCircle(24f, 16f, 8f, carPaint)
-        carPaint.color = vehicle.trailColor.toInt()
-        canvas.drawCircle(-24f, 16f, 3f, carPaint)
-        canvas.drawCircle(24f, 16f, 3f, carPaint)
-    }
-
-    private fun drawTruck(canvas: Canvas, boosting: Boolean) {
-        carPaint.color = ColorUtils.withAlpha(Color.BLACK, 90)
-        canvas.drawOval(-48f, 22f, 48f, 36f, carPaint)
-        // Cab
-        path.reset()
-        path.moveTo(-20f, 12f)
-        path.lineTo(-18f, -18f)
-        path.lineTo(8f, -20f)
-        path.lineTo(14f, 12f)
-        path.close()
-        carPaint.color = if (boosting) 0xFFFF6622.toInt() else vehicle.bodyColor.toInt()
-        canvas.drawPath(path, carPaint)
-        // Trailer box
-        carPaint.color = if (boosting) 0xFFCC5522.toInt() else 0xFFDD7744.toInt()
-        canvas.drawRoundRect(-44f, -8f, -16f, 18f, 4f, 4f, carPaint)
-        carPaint.color = 0xFF1A2030.toInt()
-        canvas.drawRect(-12f, -16f, 6f, -2f, carPaint)
-        drawUnderglow(canvas, boosting)
-        carPaint.color = 0xFFFFF8D0.toInt()
-        canvas.drawCircle(10f, -2f, 5f, carPaint)
-        if (boosting) drawBoostFlame(canvas)
-        carPaint.color = 0xFF1A1A22.toInt()
-        canvas.drawCircle(-36f, 18f, 9f, carPaint)
-        canvas.drawCircle(-22f, 18f, 9f, carPaint)
-        canvas.drawCircle(6f, 18f, 9f, carPaint)
-        carPaint.color = vehicle.trailColor.toInt()
-        canvas.drawCircle(-36f, 18f, 3f, carPaint)
-        canvas.drawCircle(-22f, 18f, 3f, carPaint)
-        canvas.drawCircle(6f, 18f, 3f, carPaint)
-    }
-
-    private fun drawMotorcycle(canvas: Canvas, boosting: Boolean) {
-        carPaint.color = ColorUtils.withAlpha(Color.BLACK, 80)
-        canvas.drawOval(-28f, 18f, 28f, 28f, carPaint)
-        // Wheels
-        carPaint.color = 0xFF222230.toInt()
-        canvas.drawCircle(-18f, 14f, 11f, carPaint)
-        canvas.drawCircle(18f, 14f, 11f, carPaint)
-        carPaint.color = vehicle.trailColor.toInt()
-        canvas.drawCircle(-18f, 14f, 4f, carPaint)
-        canvas.drawCircle(18f, 14f, 4f, carPaint)
-        // Slim body / tank
-        path.reset()
-        path.moveTo(-14f, 6f)
-        path.lineTo(-6f, -14f)
-        path.lineTo(10f, -12f)
-        path.lineTo(16f, 4f)
-        path.lineTo(4f, 10f)
-        path.lineTo(-10f, 10f)
-        path.close()
-        carPaint.color = if (boosting) 0xFFFF44AA.toInt() else vehicle.bodyColor.toInt()
-        canvas.drawPath(path, carPaint)
-        // Rider silhouette
-        carPaint.color = 0xFF1A1520.toInt()
-        canvas.drawCircle(0f, -18f, 7f, carPaint)
-        canvas.drawRoundRect(-6f, -12f, 8f, 4f, 3f, 3f, carPaint)
-        // Handlebar
-        linePaint.color = 0xFFCCCCDD.toInt()
-        linePaint.strokeWidth = 3f
-        canvas.drawLine(8f, -10f, 20f, -18f, linePaint)
-        drawUnderglow(canvas, boosting)
-        if (boosting) {
-            glowPaint.shader = RadialGradient(
-                -22f, 14f, 36f,
-                ColorUtils.withAlpha(0xFFFFEE55.toInt(), 160),
-                Color.TRANSPARENT,
-                Shader.TileMode.CLAMP
-            )
-            canvas.drawCircle(-22f, 14f, 36f, glowPaint)
-        }
-    }
-
-    private fun drawHelicopter(canvas: Canvas, boosting: Boolean) {
-        carPaint.color = ColorUtils.withAlpha(Color.BLACK, 70)
-        canvas.drawOval(-36f, 16f, 36f, 28f, carPaint)
-        // Cabin bubble
-        carPaint.color = if (boosting) 0xFF88FFBB.toInt() else vehicle.bodyColor.toInt()
-        path.reset()
-        path.moveTo(-22f, 6f)
-        path.quadTo(-24f, -18f, 0f, -22f)
-        path.quadTo(18f, -16f, 22f, 4f)
-        path.lineTo(14f, 14f)
-        path.lineTo(-14f, 14f)
-        path.close()
-        canvas.drawPath(path, carPaint)
-        carPaint.color = ColorUtils.withAlpha(0xFF102018.toInt(), 180)
-        canvas.drawOval(-10f, -16f, 12f, 2f, carPaint)
-        // Tail boom
-        carPaint.color = vehicle.bodyColor.toInt()
-        canvas.drawRoundRect(-48f, -4f, -18f, 4f, 3f, 3f, carPaint)
-        canvas.drawRect(-50f, -12f, -44f, 10f, carPaint)
-        // Main rotor
-        linePaint.color = ColorUtils.withAlpha(0xFFEEFFEE.toInt(), if (boosting) 200 else 140)
-        linePaint.strokeWidth = 3f
-        val r = 42f + if (boosting) 6f else 0f
-        val a = rotor
-        canvas.drawLine(
-            kotlin.math.cos(a.toDouble()).toFloat() * r,
-            -24f + kotlin.math.sin(a.toDouble()).toFloat() * 4f,
-            -kotlin.math.cos(a.toDouble()).toFloat() * r,
-            -24f - kotlin.math.sin(a.toDouble()).toFloat() * 4f,
-            linePaint
-        )
-        canvas.drawLine(
-            kotlin.math.cos(a + 1.57).toFloat() * r * 0.9f,
-            -24f,
-            -kotlin.math.cos(a + 1.57).toFloat() * r * 0.9f,
-            -24f,
-            linePaint
-        )
-        carPaint.color = 0xFF334433.toInt()
-        canvas.drawCircle(0f, -24f, 4f, carPaint)
-        // Skids
-        linePaint.color = 0xFF889988.toInt()
-        linePaint.strokeWidth = 3f
-        canvas.drawLine(-18f, 16f, 18f, 16f, linePaint)
-        canvas.drawLine(-14f, 10f, -14f, 16f, linePaint)
-        canvas.drawLine(14f, 10f, 14f, 16f, linePaint)
-        drawUnderglow(canvas, boosting)
-        if (boosting) {
-            glowPaint.shader = RadialGradient(
-                0f, 20f, 50f,
-                ColorUtils.withAlpha(vehicle.trailColor.toInt(), 140),
-                Color.TRANSPARENT,
-                Shader.TileMode.CLAMP
-            )
-            canvas.drawCircle(0f, 22f, 50f, glowPaint)
-        }
-    }
-
-    private fun drawHeadlightBeams(canvas: Canvas) {
-        glowPaint.shader = LinearGradient(
-            -22f, -20f, -22f, -90f,
-            ColorUtils.withAlpha(0xFFFFF0A0.toInt(), 90),
-            Color.TRANSPARENT,
-            Shader.TileMode.CLAMP
-        )
-        path.reset()
-        path.moveTo(-26f, -4f)
-        path.lineTo(-40f, -85f)
-        path.lineTo(-8f, -85f)
-        path.close()
-        canvas.drawPath(path, glowPaint)
-        path.reset()
-        path.moveTo(26f, -4f)
-        path.lineTo(8f, -85f)
-        path.lineTo(40f, -85f)
-        path.close()
-        canvas.drawPath(path, glowPaint)
-    }
-
-    private fun drawHeadlights(canvas: Canvas) {
-        carPaint.color = 0xFFFFF8D0.toInt()
-        canvas.drawCircle(-22f, -2f, 5f, carPaint)
-        canvas.drawCircle(22f, -2f, 5f, carPaint)
-        glowPaint.shader = RadialGradient(
-            -22f, -2f, 16f,
-            ColorUtils.withAlpha(0xFFFFF0A0.toInt(), 160),
-            Color.TRANSPARENT,
-            Shader.TileMode.CLAMP
-        )
-        canvas.drawCircle(-22f, -2f, 16f, glowPaint)
-        glowPaint.shader = RadialGradient(
-            22f, -2f, 16f,
-            ColorUtils.withAlpha(0xFFFFF0A0.toInt(), 160),
-            Color.TRANSPARENT,
-            Shader.TileMode.CLAMP
-        )
-        canvas.drawCircle(22f, -2f, 16f, glowPaint)
-    }
-
-    private fun drawUnderglow(canvas: Canvas, boosting: Boolean) {
-        val c = if (boosting) vehicle.trailColor.toInt() else vehicle.bodyColor.toInt()
-        glowPaint.shader = RadialGradient(
-            0f, 18f, 50f,
-            ColorUtils.withAlpha(c, 120),
-            Color.TRANSPARENT,
-            Shader.TileMode.CLAMP
-        )
-        canvas.drawCircle(0f, 20f, 48f, glowPaint)
-    }
-
-    private fun drawBoostFlame(canvas: Canvas) {
-        glowPaint.shader = RadialGradient(
-            0f, 24f, 44f,
-            ColorUtils.withAlpha(0xFFFF6600.toInt(), 180),
-            Color.TRANSPARENT,
-            Shader.TileMode.CLAMP
-        )
-        canvas.drawCircle(0f, 26f, 44f, glowPaint)
     }
 }

@@ -2,6 +2,7 @@ package com.screenmotion.app.data
 
 /**
  * Selectable vehicle variants for the Vehicle theme.
+ * Trail/body colors muted toward cinematic (no neon magenta/cyber).
  */
 enum class VehicleType(
     val displayName: String,
@@ -15,32 +16,32 @@ enum class VehicleType(
         displayName = "Sports",
         displayNameTr = "Spor",
         emoji = "🏎️",
-        trailColor = 0xFF00F0FF,
-        bodyColor = 0xFF2EE6FF,
+        trailColor = 0xFF5BA3D9,
+        bodyColor = 0xFF7BB8E0,
         boostMult = 3.4f
     ),
     TRUCK(
         displayName = "Truck",
         displayNameTr = "Kamyon",
         emoji = "🚛",
-        trailColor = 0xFFFFAA33,
-        bodyColor = 0xFFFF8844,
+        trailColor = 0xFFD4A574,
+        bodyColor = 0xFFC48A5A,
         boostMult = 2.4f
     ),
     MOTORCYCLE(
         displayName = "Bike",
         displayNameTr = "Motor",
         emoji = "🏍️",
-        trailColor = 0xFFFF2D95,
-        bodyColor = 0xFFE040FB,
+        trailColor = 0xFFC47A8A,
+        bodyColor = 0xFFA86890,
         boostMult = 4.0f
     ),
     HELICOPTER(
         displayName = "Heli",
         displayNameTr = "Helikopter",
         emoji = "🚁",
-        trailColor = 0xFF88FFAA,
-        bodyColor = 0xFF66EE99,
+        trailColor = 0xFF7AAA8A,
+        bodyColor = 0xFF6B9B7A,
         boostMult = 2.8f
     );
 

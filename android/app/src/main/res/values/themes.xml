@@ -3,11 +3,28 @@
     <style name="Theme.ScreenMotion" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/accent</item>
         <item name="colorPrimaryVariant">@color/accent</item>
-        <item name="colorSecondary">@color/accent_warm</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
         <item name="android:statusBarColor">@color/bg_dark</item>
         <item name="android:navigationBarColor">@color/bg_dark</item>
         <item name="android:windowBackground">@color/bg_dark</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:colorBackground">@color/bg_dark</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.ScreenMotion.BottomSheet</item>
+    </style>
+
+    <style name="ThemeOverlay.ScreenMotion.BottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.ScreenMotion.BottomSheet</item>
+        <item name="android:colorBackground">@color/bg_elevated</item>
+    </style>
+
+    <style name="Widget.ScreenMotion.BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/ShapeAppearance.ScreenMotion.Large</item>
+        <item name="backgroundTint">@color/bg_elevated</item>
+    </style>
+
+    <style name="ShapeAppearance.ScreenMotion.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
     </style>
 </resources>
