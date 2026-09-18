@@ -1,0 +1,22 @@
+# Android
+android/.gradle/
+android/local.properties
+android/**/build/
+android/.idea/
+android/*.iml
+android/captures/
+*.apk
+*.aab
+
+# iOS
+ios/**/xcuserdata/
+ios/**/DerivedData/
+ios/**/*.xcuserstate
+ios/**/.DS_Store
+*.ipa
+
+# General
+.DS_Store
+.idea/
+*.log
+.vscode/

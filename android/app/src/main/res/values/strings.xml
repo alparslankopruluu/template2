@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScreenMotion</string>
+    <string name="app_author">ScreenMotion</string>
+    <string name="tagline">Interactive live wallpapers</string>
+    <string name="wallpaper_description">Tilt, touch, and play — cinematic interactive wallpaper.</string>
+    <string name="set_as_wallpaper">Set as live wallpaper</string>
+    <string name="wallpaper_error">Could not open wallpaper picker. Long-press home screen → Wallpapers → Live wallpapers → ScreenMotion.</string>
+    <string name="onboarding_title">Make it move</string>
+    <string name="onboarding_tilt">Tilt your phone to shift the scene (parallax &amp; current).</string>
+    <string name="onboarding_touch">Drag, swipe, and long-press for theme-specific magic.</string>
+    <string name="onboarding_got_it">Got it — let\'s play</string>
+    <string name="choose_theme">Choose a theme</string>
+</resources>

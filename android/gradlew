@@ -1,0 +1,5 @@
+#!/bin/sh
+# Gradle start-up script (placeholder — open in Android Studio to sync)
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec java -jar "$DIR/gradle/wrapper/gradle-wrapper.jar" "$@" 2>/dev/null || \
+  echo "Open this project in Android Studio to generate the Gradle wrapper."
