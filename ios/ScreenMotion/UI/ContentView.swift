@@ -7,15 +7,19 @@ struct ContentView: View {
     @State private var showOnboarding = false
     @State private var showTutorial = false
     @State private var showExport = false
+    @State private var showShowcase = false
 
     var body: some View {
         ZStack {
             Color(red: 0.03, green: 0.03, blue: 0.06).ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 14) {
                 header
                 previewCard
                 themePicker
+                if settings.selectedTheme == .vehicle {
+                    vehiclePicker
+                }
                 actionButtons
             }
             .padding(20)
@@ -30,6 +34,7 @@ struct ContentView: View {
         }
         .onAppear {
             motion.start()
+            SoundEffects.shared.isMuted = settings.soundMuted
             if !settings.onboardingDone {
                 showOnboarding = true
             }
@@ -41,27 +46,51 @@ struct ContentView: View {
         .sheet(isPresented: $showExport) {
             ExportView(theme: settings.selectedTheme)
         }
+        .sheet(isPresented: $showShowcase) {
+            ShowcaseView()
+        }
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("ScreenMotion")
-                .font(.system(size: 28, weight: .bold, design: .rounded))
-                .foregroundStyle(Color(red: 0.95, green: 0.96, blue: 1))
-            Text("Interactive preview · export for wallpaper")
-                .font(.subheadline)
-                .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("ScreenMotion")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.95, green: 0.96, blue: 1))
+                Text("Interactive preview · export for wallpaper")
+                    .font(.subheadline)
+                    .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
+            }
+            Spacer()
+            Button {
+                settings.soundMuted.toggle()
+                if !settings.soundMuted {
+                    SoundEffects.shared.play(.themeSelect)
+                }
+            } label: {
+                Image(systemName: settings.soundMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                    .font(.title3)
+                    .foregroundStyle(Color(red: 0.95, green: 0.96, blue: 1))
+                    .opacity(settings.soundMuted ? 0.55 : 1)
+                    .frame(width: 40, height: 40)
+            }
+            .accessibilityLabel("Mute sound effects")
         }
     }
 
     private var previewCard: some View {
-        SceneCanvasView(theme: settings.selectedTheme, motion: motion, touch: $touch)
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
-            )
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        SceneCanvasView(
+            theme: settings.selectedTheme,
+            vehicle: settings.selectedVehicle,
+            motion: motion,
+            touch: $touch
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.white.opacity(0.08), lineWidth: 1)
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var themePicker: some View {
@@ -77,6 +106,7 @@ struct ContentView: View {
                                 settings.selectedTheme = theme
                                 touch = TouchState()
                             }
+                            SoundEffects.shared.play(.themeSelect)
                         }
                     }
                 }
@@ -85,18 +115,77 @@ struct ContentView: View {
         }
     }
 
+    private var vehiclePicker: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Vehicle type · Araç tipi")
+                .font(.caption)
+                .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(VehicleType.allCases) { v in
+                        Button {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                settings.selectedVehicle = v
+                            }
+                            SoundEffects.shared.play(.themeSelect)
+                        } label: {
+                            HStack(spacing: 6) {
+                                Text(v.emoji)
+                                Text(v.rawValue)
+                                    .font(.caption.weight(.bold))
+                                    .foregroundStyle(.white)
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12))
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(
+                                                settings.selectedVehicle == v
+                                                    ? Color(red: 1, green: 0.42, blue: 0.54)
+                                                    : Color.white.opacity(0.08),
+                                                lineWidth: settings.selectedVehicle == v ? 2 : 1
+                                            )
+                                    )
+                            )
+                            .opacity(settings.selectedVehicle == v ? 1 : 0.75)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+    }
+
     private var actionButtons: some View {
         VStack(spacing: 10) {
-            Button {
-                showExport = true
-            } label: {
-                Label("Export short video", systemImage: "square.and.arrow.up")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
+            HStack(spacing: 10) {
+                Button {
+                    showShowcase = true
+                    SoundEffects.shared.play(.themeSelect)
+                } label: {
+                    Label("Showcase", systemImage: "sparkles.rectangle.stack")
+                        .font(.subheadline.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.bordered)
+                .tint(Color(red: 0.42, green: 0.55, blue: 1))
+
+                Button {
+                    showExport = true
+                    SoundEffects.shared.play(.applySuccess)
+                } label: {
+                    Label("Export", systemImage: "square.and.arrow.up")
+                        .font(.subheadline.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color(red: 0.42, green: 0.55, blue: 1))
             }
-            .buttonStyle(.borderedProminent)
-            .tint(Color(red: 0.42, green: 0.55, blue: 1))
 
             Button {
                 showTutorial = true

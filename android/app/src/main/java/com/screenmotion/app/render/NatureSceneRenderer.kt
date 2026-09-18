@@ -7,6 +7,8 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RadialGradient
 import android.graphics.Shader
+import com.screenmotion.app.audio.SfxKind
+import com.screenmotion.app.audio.SfxPlayer
 import com.screenmotion.app.data.ThemeConfig
 import com.screenmotion.app.motion.MotionState
 import com.screenmotion.app.util.ColorUtils
@@ -60,6 +62,8 @@ class NatureSceneRenderer : SceneRenderer {
     private val treesNear = mutableListOf<Tree>()
 
     private var time = 0f
+    private var wasTouching = false
+    private var lastTiltAbs = 0f
     private var windForce = 0f
     private var leafX = 0.55f
     private var leafY = 0.42f
@@ -139,6 +143,15 @@ class NatureSceneRenderer : SceneRenderer {
 
     override fun update(dt: Float, motion: MotionState, config: ThemeConfig) {
         time += dt
+        if (motion.touching && !wasTouching) {
+            SfxPlayer.play(SfxKind.BIRD_CHIRP)
+        }
+        wasTouching = motion.touching
+        val tiltAbs = kotlin.math.abs(motion.tiltX) + kotlin.math.abs(motion.tiltY)
+        if (tiltAbs > 0.55f && tiltAbs > lastTiltAbs + 0.12f) {
+            SfxPlayer.play(SfxKind.WIND_WHOOSH)
+        }
+        lastTiltAbs = tiltAbs
         idleBob = sin(time * 1.1f) * 0.5f + 0.5f
         val targetWind = motion.tiltX * 90f + if (motion.touching) motion.swipeVx * 0.04f else 0f
         windForce = MathUtils.smoothDamp(windForce, targetWind, dt, 0.22f)

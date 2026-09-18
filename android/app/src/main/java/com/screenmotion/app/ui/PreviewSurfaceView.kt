@@ -6,11 +6,16 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.screenmotion.app.audio.SfxKind
+import com.screenmotion.app.audio.SfxPlayer
+import com.screenmotion.app.data.ConfigRepository
 import com.screenmotion.app.data.ThemeConfig
 import com.screenmotion.app.data.ThemeType
+import com.screenmotion.app.data.VehicleType
 import com.screenmotion.app.motion.MotionController
 import com.screenmotion.app.render.SceneFactory
 import com.screenmotion.app.render.SceneRenderer
+import com.screenmotion.app.render.VehicleSceneRenderer
 
 /**
  * In-app interactive preview mirroring the live wallpaper scenes.
@@ -20,24 +25,37 @@ class PreviewSurfaceView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : SurfaceView(context, attrs), SurfaceHolder.Callback {
 
+    private val repo = ConfigRepository.get(context)
     private var renderer: SceneRenderer = SceneFactory.create(ThemeType.SPACE)
     private var config: ThemeConfig = ThemeConfig.forTheme(ThemeType.SPACE)
     private val motion = MotionController(context)
     private var thread: Thread? = null
     @Volatile private var running = false
+    private var touchDownPlayed = false
 
     init {
         holder.addCallback(this)
         isClickable = true
         isFocusable = true
+        SfxPlayer.init(context)
     }
 
     fun setTheme(type: ThemeType) {
         config = ThemeConfig.forTheme(type)
-        renderer = SceneFactory.create(type)
+        renderer = SceneFactory.create(type, repo.selectedVehicle)
         if (width > 0 && height > 0) {
             renderer.onSizeChanged(width, height)
             renderer.reset()
+        }
+    }
+
+    fun setVehicle(type: VehicleType) {
+        repo.selectedVehicle = type
+        val v = renderer
+        if (v is VehicleSceneRenderer) {
+            v.setVehicle(type)
+        } else if (repo.selectedTheme == ThemeType.VEHICLE) {
+            setTheme(ThemeType.VEHICLE)
         }
     }
 
@@ -57,6 +75,13 @@ class PreviewSurfaceView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                touchDownPlayed = false
+                SfxPlayer.play(context, SfxKind.TOUCH_SPLASH)
+                touchDownPlayed = true
+            }
+        }
         motion.onTouch(event)
         return true
     }

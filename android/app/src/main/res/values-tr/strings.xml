@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScreenMotion</string>
+    <string name="tagline">Etkileşimli canlı duvar kağıtları · eğ · dokun · oyna</string>
+    <string name="wallpaper_description">Eğ, dokun ve oyna — sinematik etkileşimli duvar kağıdı.</string>
+    <string name="set_as_wallpaper">Canlı duvar kağıdı yap</string>
+    <string name="wallpaper_error">Duvar kağıdı seçici açılamadı. Ana ekrana uzun basın → Duvar kağıtları → Canlı duvar kağıtları → ScreenMotion.</string>
+    <string name="onboarding_title">Hareket ettir</string>
+    <string name="onboarding_tip1_title">1 · Eğ</string>
+    <string name="onboarding_tip1">Eğ / tilt — paralaks katmanlar, rüzgar ve su akıntısı telefonunu takip eder.</string>
+    <string name="onboarding_tip2_title">2 · Sürükle</string>
+    <string name="onboarding_tip2">Sürükle / drag — balıklar, kuşlar ve yaprak maskot parmağına koşar.</string>
+    <string name="onboarding_tip3_title">3 · Kaydır &amp; basılı tut</string>
+    <string name="onboarding_tip3">Kaydır / swipe ile meteor &amp; boost · uzun bas ile dost gemi.</string>
+    <string name="onboarding_got_it">Anladım — hadi oynayalım</string>
+    <string name="choose_theme">Tema seç</string>
+    <string name="choose_vehicle">Araç tipi · Vehicle type</string>
+    <string name="sound_toggle">Ses efektlerini kapat / aç</string>
+    <string name="showcase">Vitrin</string>
+    <string name="showcase_close">← Kapat</string>
+    <string name="showcase_hero_title">ScreenMotion</string>
+    <string name="showcase_hero_tagline">Tilt. Touch. Play.\nCinematic live wallpapers that react to you.</string>
+    <string name="showcase_hero_tagline_tr">Eğ. Dokun. Oyna.\nSana tepki veren sinematik canlı duvar kağıtları.</string>
+    <string name="showcase_features_title">Öne çıkanlar · Highlights</string>
+    <string name="showcase_feat_gyro">📱 Jiroskop &amp; dokunma — her eğiş ve sürüklemede paralaks.</string>
+    <string name="showcase_feat_themes">🎨 Dört tema — Uzay, Akvaryum, Araç, Doğa.</string>
+    <string name="showcase_feat_mascots">✨ İfadeli maskotlar — balık, gemi, araçlar, kuşlar &amp; yaprak.</string>
+    <string name="showcase_feat_sfx">🔊 Eğlenceli SFX — istediğin zaman sessiz; boost, meteor, kabarcık.</string>
+    <string name="showcase_gallery_title">Tema galerisi · Theme gallery</string>
+    <string name="showcase_footer">Mağaza önizleme · Store preview · v3</string>
+</resources>

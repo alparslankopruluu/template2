@@ -11,27 +11,51 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.04" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/subtitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.04"
+                    android:textColor="@color/text_primary"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/subtitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnMute"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/sound_toggle"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_lock_silent_mode_off"
+                android:tint="@color/text_primary" />
+        </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
             app:cardBackgroundColor="@color/bg_card"
             app:cardCornerRadius="20dp"
@@ -48,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:text="@string/choose_theme"
             android:textColor="@color/text_secondary"
             android:textSize="13sp" />
@@ -66,20 +90,63 @@
                 android:orientation="horizontal" />
         </HorizontalScrollView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSetWallpaper"
+        <TextView
+            android:id="@+id/vehicleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/choose_vehicle"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <HorizontalScrollView
+            android:id="@+id/vehicleScroll"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/set_as_wallpaper"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            app:backgroundTint="@color/accent"
-            app:cornerRadius="16dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/vehicleRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShowcase"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/showcase"
+                android:textAllCaps="false"
+                app:cornerRadius="14dp"
+                app:strokeColor="@color/accent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSetWallpaper"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1.2"
+                android:text="@string/set_as_wallpaper"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                app:backgroundTint="@color/accent"
+                app:cornerRadius="14dp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Onboarding overlay — 3 short tips TR+EN cues -->
     <FrameLayout
         android:id="@+id/onboardingOverlay"
         android:layout_width="match_parent"
@@ -114,14 +181,15 @@
                 android:textColor="@color/accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:lineSpacingExtra="3dp"
                 android:text="@string/onboarding_tip1"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,14 +199,15 @@
                 android:textColor="@color/accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:lineSpacingExtra="3dp"
                 android:text="@string/onboarding_tip2"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -148,14 +217,15 @@
                 android:textColor="@color/accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:lineSpacingExtra="3dp"
                 android:text="@string/onboarding_tip3"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp" />
+                android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDismissOnboarding"

@@ -7,6 +7,8 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RadialGradient
 import android.graphics.Shader
+import com.screenmotion.app.audio.SfxKind
+import com.screenmotion.app.audio.SfxPlayer
 import com.screenmotion.app.data.ThemeConfig
 import com.screenmotion.app.motion.MotionState
 import com.screenmotion.app.util.ColorUtils
@@ -102,6 +104,7 @@ class SpaceSceneRenderer : SceneRenderer {
                 life = 1f,
                 length = 40f + rng.nextFloat() * 50f
             )
+            SfxPlayer.play(SfxKind.METEOR)
             motion.clearSwipe()
         }
         if (rng.nextFloat() < dt * 0.4f) {

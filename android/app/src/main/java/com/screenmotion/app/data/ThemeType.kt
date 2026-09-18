@@ -3,7 +3,7 @@ package com.screenmotion.app.data
 enum class ThemeType(val displayName: String, val emoji: String, val subtitle: String) {
     SPACE("Space", "🚀", "Stars · meteors · friendly ship"),
     AQUARIUM("Aquarium", "🐠", "Curious fish · bubbles · current"),
-    VEHICLE("Vehicle", "🏎️", "Neon drive · tilt lanes · boost"),
+    VEHICLE("Vehicle", "🏎️", "4 vehicles · tilt lanes · boost"),
     NATURE("Nature", "🌿", "Clouds · birds · wind · hills");
 
     companion object {

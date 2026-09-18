@@ -12,6 +12,8 @@ import android.os.VibratorManager
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
+import android.widget.HorizontalScrollView
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -19,8 +21,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import com.screenmotion.app.R
+import com.screenmotion.app.audio.SfxKind
+import com.screenmotion.app.audio.SfxPlayer
 import com.screenmotion.app.data.ConfigRepository
 import com.screenmotion.app.data.ThemeType
+import com.screenmotion.app.data.VehicleType
 import com.screenmotion.app.wallpaper.InteractiveWallpaperService
 
 class MainActivity : AppCompatActivity() {
@@ -29,25 +34,50 @@ class MainActivity : AppCompatActivity() {
     private lateinit var preview: PreviewSurfaceView
     private lateinit var onboarding: View
     private lateinit var themeRow: LinearLayout
+    private lateinit var vehicleRow: LinearLayout
+    private lateinit var vehicleLabel: TextView
+    private lateinit var vehicleScroll: HorizontalScrollView
+    private lateinit var btnMute: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         repo = ConfigRepository.get(this)
+        SfxPlayer.init(this)
 
         preview = findViewById(R.id.previewSurface)
         onboarding = findViewById(R.id.onboardingOverlay)
         themeRow = findViewById(R.id.themeRow)
+        vehicleRow = findViewById(R.id.vehicleRow)
+        vehicleLabel = findViewById(R.id.vehicleLabel)
+        vehicleScroll = findViewById(R.id.vehicleScroll)
+        btnMute = findViewById(R.id.btnMute)
 
         findViewById<TextView>(R.id.titleText).text = getString(R.string.app_name)
         findViewById<TextView>(R.id.subtitleText).text = getString(R.string.tagline)
 
         setupThemeCards()
+        setupVehicleChips()
+        updateVehicleVisibility(repo.selectedTheme)
+        updateMuteIcon()
         preview.setTheme(repo.selectedTheme)
+
+        btnMute.setOnClickListener {
+            repo.soundMuted = !repo.soundMuted
+            updateMuteIcon()
+            lightHaptic()
+            if (!repo.soundMuted) SfxPlayer.play(this, SfxKind.THEME_SELECT)
+        }
 
         findViewById<Button>(R.id.btnSetWallpaper).setOnClickListener {
             lightHaptic()
+            SfxPlayer.play(this, SfxKind.APPLY_SUCCESS)
             setLiveWallpaper()
+        }
+        findViewById<Button>(R.id.btnShowcase).setOnClickListener {
+            lightHaptic()
+            SfxPlayer.play(this, SfxKind.THEME_SELECT)
+            startActivity(Intent(this, ShowcaseActivity::class.java))
         }
         findViewById<Button>(R.id.btnDismissOnboarding).setOnClickListener {
             lightHaptic()
@@ -64,6 +94,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateMuteIcon() {
+        btnMute.setImageResource(
+            if (repo.soundMuted) android.R.drawable.ic_lock_silent_mode
+            else android.R.drawable.ic_lock_silent_mode_off
+        )
+        btnMute.alpha = if (repo.soundMuted) 0.55f else 1f
+    }
+
     private fun setupThemeCards() {
         themeRow.removeAllViews()
         for (theme in ThemeType.entries) {
@@ -74,8 +112,10 @@ class MainActivity : AppCompatActivity() {
             updateCardSelection(card, theme == repo.selectedTheme)
             card.setOnClickListener {
                 lightHaptic()
+                SfxPlayer.play(this, SfxKind.THEME_SELECT)
                 repo.selectedTheme = theme
                 preview.setTheme(theme)
+                updateVehicleVisibility(theme)
                 for (i in 0 until themeRow.childCount) {
                     val c = themeRow.getChildAt(i) as MaterialCardView
                     val t = ThemeType.entries[i]
@@ -90,7 +130,6 @@ class MainActivity : AppCompatActivity() {
                             .start()
                     }.start()
             }
-            // Staggered entrance
             card.alpha = 0f
             card.translationY = 16f
             themeRow.addView(card)
@@ -101,6 +140,39 @@ class MainActivity : AppCompatActivity() {
                 .setInterpolator(DecelerateInterpolator())
                 .start()
         }
+    }
+
+    private fun setupVehicleChips() {
+        vehicleRow.removeAllViews()
+        for (v in VehicleType.entries) {
+            val chip = layoutInflater.inflate(R.layout.item_vehicle_chip, vehicleRow, false) as MaterialCardView
+            chip.findViewById<TextView>(R.id.vehicleEmoji).text = v.emoji
+            chip.findViewById<TextView>(R.id.vehicleName).text = v.displayName
+            updateVehicleChip(chip, v == repo.selectedVehicle)
+            chip.setOnClickListener {
+                lightHaptic()
+                SfxPlayer.play(this, SfxKind.THEME_SELECT)
+                repo.selectedVehicle = v
+                preview.setVehicle(v)
+                for (i in 0 until vehicleRow.childCount) {
+                    val c = vehicleRow.getChildAt(i) as MaterialCardView
+                    updateVehicleChip(c, VehicleType.entries[i] == v)
+                }
+            }
+            vehicleRow.addView(chip)
+        }
+    }
+
+    private fun updateVehicleVisibility(theme: ThemeType) {
+        val show = theme == ThemeType.VEHICLE
+        vehicleLabel.isVisible = show
+        vehicleScroll.isVisible = show
+    }
+
+    private fun updateVehicleChip(card: MaterialCardView, selected: Boolean) {
+        card.strokeWidth = if (selected) 3 else 1
+        card.strokeColor = getColor(if (selected) R.color.accent_warm else R.color.stroke)
+        card.alpha = if (selected) 1f else 0.75f
     }
 
     private fun updateCardSelection(card: MaterialCardView, selected: Boolean) {
@@ -128,7 +200,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } catch (_: Exception) {
-            // Optional feedback — ignore if unavailable
         }
     }
 
@@ -162,5 +233,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         preview.setTheme(repo.selectedTheme)
+        updateVehicleVisibility(repo.selectedTheme)
+        updateMuteIcon()
     }
 }

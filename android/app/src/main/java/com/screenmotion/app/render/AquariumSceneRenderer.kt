@@ -7,6 +7,8 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RadialGradient
 import android.graphics.Shader
+import com.screenmotion.app.audio.SfxKind
+import com.screenmotion.app.audio.SfxPlayer
 import com.screenmotion.app.data.ThemeConfig
 import com.screenmotion.app.motion.MotionState
 import com.screenmotion.app.util.ColorUtils
@@ -150,6 +152,7 @@ class AquariumSceneRenderer : SceneRenderer {
             if (b.y < -0.05f) {
                 b.y = 1.05f
                 b.x = rng.nextFloat()
+                SfxPlayer.play(SfxKind.BUBBLE_POP)
             }
         }
     }

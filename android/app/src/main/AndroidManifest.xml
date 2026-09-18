@@ -25,6 +25,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.ShowcaseActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ScreenMotion"
+            android:label="@string/showcase" />
+
         <service
             android:name=".wallpaper.InteractiveWallpaperService"
             android:exported="true"

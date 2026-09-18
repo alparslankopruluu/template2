@@ -73,7 +73,7 @@ class InteractiveWallpaperService : WallpaperService() {
         private fun reloadTheme() {
             val repo = ConfigRepository.get(this@InteractiveWallpaperService)
             config = repo.themeConfig()
-            renderer = SceneFactory.create(repo.selectedTheme).also {
+            renderer = SceneFactory.create(repo.selectedTheme, repo.selectedVehicle).also {
                 if (width > 0 && height > 0) it.onSizeChanged(width, height)
                 it.reset()
             }

@@ -15,4 +15,18 @@
     <string name="onboarding_tip3">Kaydır / swipe for meteors &amp; boost · uzun bas / long-press for the friendly ship.</string>
     <string name="onboarding_got_it">Got it — let\'s play</string>
     <string name="choose_theme">Choose a theme</string>
+    <string name="choose_vehicle">Vehicle type · Araç tipi</string>
+    <string name="sound_toggle">Mute / unmute sound effects</string>
+    <string name="showcase">Showcase</string>
+    <string name="showcase_close">← Close</string>
+    <string name="showcase_hero_title">ScreenMotion</string>
+    <string name="showcase_hero_tagline">Tilt. Touch. Play.\nCinematic live wallpapers that react to you.</string>
+    <string name="showcase_hero_tagline_tr">Eğ. Dokun. Oyna.\nSana tepki veren sinematik canlı duvar kağıtları.</string>
+    <string name="showcase_features_title">Highlights · Öne çıkanlar</string>
+    <string name="showcase_feat_gyro">📱 Gyro &amp; touch — parallax layers follow every tilt and drag.</string>
+    <string name="showcase_feat_themes">🎨 Four themes — Space, Aquarium, Vehicle, Nature.</string>
+    <string name="showcase_feat_mascots">✨ Expressive mascots — fish, ship, vehicles, birds &amp; leaf.</string>
+    <string name="showcase_feat_sfx">🔊 Playful SFX — mute anytime; boost, meteors, bubbles &amp; more.</string>
+    <string name="showcase_gallery_title">Theme gallery · Tema galerisi</string>
+    <string name="showcase_footer">Store preview mode · Magaza önizleme · v3</string>
 </resources>

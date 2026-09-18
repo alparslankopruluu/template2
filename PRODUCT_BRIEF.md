@@ -58,3 +58,9 @@ Monorepo named ScreenMotion:
 6. Commit everything to the new Origin repo main branch.
 
 Do not invent a separate product name; use ScreenMotion.
+
+
+## Shipped beyond MVP (v3)
+- Procedural SFX + mute (Android ToneGenerator, iOS generated WAV)
+- Vehicle variants: sports / truck / motorcycle / helicopter + picker UI
+- In-app Showcase (store preview) + `store/` listing markdown EN+TR
