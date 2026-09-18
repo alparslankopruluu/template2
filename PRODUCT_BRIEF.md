@@ -16,7 +16,7 @@ Users pick themes (vehicles, aquarium, space, nature) and get interactive lock/h
 - First render: Android Canvas; structure ready for OpenGL ES later
 - Real "Set as live wallpaper" apply button
 - Package layout: data, motion, render, wallpaper, ui, util
-- Suggested types: ThemeConfig, ThemeType, ConfigRepository, MotionController, SceneRenderer, AquariumSceneRenderer, SpaceSceneRenderer, VehicleSceneRenderer, InteractiveWallpaperService
+- Suggested types: ThemeConfig, ThemeType, ConfigRepository, MotionController, SceneRenderer, AquariumSceneRenderer, SpaceSceneRenderer, VehicleSceneRenderer, NatureSceneRenderer, InteractiveWallpaperService
 - SharedPreferences for MVP settings
 
 ### iOS
@@ -28,10 +28,10 @@ Users pick themes (vehicles, aquarium, space, nature) and get interactive lock/h
 - UIImageRenderer / AVAssetWriter / Photos API as appropriate for MVP
 
 ## MVP themes (must ship)
-1. **Space** — gyro parallax stars; swipe meteor; long-press spaceship
-2. **Aquarium** — fish approach finger; tilt changes current; bubbles
-3. **Vehicle** — tilt changes lane; finger follow; fast swipe boost
-(Nature can be stubbed or light if time allows)
+1. **Space** — gyro parallax stars + planets; swipe meteor; long-press friendly ship
+2. **Aquarium** — expressive fish school toward finger; tilt current; bubbles
+3. **Vehicle** — neon sportscar; tilt lane; finger drive; swipe boost
+4. **Nature** — clouds, birds follow drag, wind particles, parallax trees/hills, leaf mascot
 
 ## UX
 - Theme picker

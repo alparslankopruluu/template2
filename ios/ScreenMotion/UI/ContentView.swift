@@ -66,20 +66,21 @@ struct ContentView: View {
 
     private var themePicker: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Choose a theme")
+            Text("Choose a theme · Tema seç")
                 .font(.caption)
                 .foregroundStyle(Color(red: 0.6, green: 0.64, blue: 0.78))
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
+                HStack(spacing: 12) {
                     ForEach(ThemeType.allCases) { theme in
                         ThemeCard(theme: theme, selected: settings.selectedTheme == theme) {
-                            withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.68)) {
                                 settings.selectedTheme = theme
                                 touch = TouchState()
                             }
                         }
                     }
                 }
+                .padding(.vertical, 4)
             }
         }
     }
@@ -118,23 +119,37 @@ struct ThemeCard: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 6) {
-                Text(theme.emoji).font(.largeTitle)
+            VStack(alignment: .leading, spacing: 6) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(
+                            LinearGradient(colors: theme.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .frame(height: 48)
+                    Text(theme.emoji).font(.title)
+                }
                 Text(theme.rawValue)
                     .font(.caption.weight(.bold))
                     .foregroundStyle(.white)
+                Text(theme.subtitle)
+                    .font(.system(size: 9))
+                    .foregroundStyle(Color(red: 0.65, green: 0.68, blue: 0.8))
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(width: 100, height: 88)
+            .padding(10)
+            .frame(width: 128, alignment: .leading)
             .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(Color(red: 0.09, green: 0.09, blue: 0.13))
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12))
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(selected ? Color(red: 0.42, green: 0.55, blue: 1) : Color.clear, lineWidth: 3)
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(selected ? Color(red: 0.42, green: 0.55, blue: 1) : Color.white.opacity(0.06), lineWidth: selected ? 2.5 : 1)
             )
-            .opacity(selected ? 1 : 0.72)
+            .opacity(selected ? 1 : 0.78)
             .scaleEffect(selected ? 1.04 : 1)
+            .shadow(color: selected ? Color(red: 0.42, green: 0.55, blue: 1).opacity(0.35) : .clear, radius: 8, y: 2)
         }
         .buttonStyle(.plain)
     }

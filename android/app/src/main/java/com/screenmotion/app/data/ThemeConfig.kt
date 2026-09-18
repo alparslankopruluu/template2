@@ -15,24 +15,31 @@ data class ThemeConfig(
         fun forTheme(type: ThemeType): ThemeConfig = when (type) {
             ThemeType.SPACE -> ThemeConfig(
                 type = type,
-                parallaxStrength = 1.2f,
-                particleCount = 120,
+                parallaxStrength = 1.35f,
+                particleCount = 160,
                 backgroundTop = 0xFF050510,
                 backgroundBottom = 0xFF1A0A2E
             )
             ThemeType.AQUARIUM -> ThemeConfig(
                 type = type,
-                parallaxStrength = 0.8f,
-                particleCount = 60,
+                parallaxStrength = 0.9f,
+                particleCount = 70,
                 backgroundTop = 0xFF021820,
                 backgroundBottom = 0xFF0A3A4A
             )
             ThemeType.VEHICLE -> ThemeConfig(
                 type = type,
-                parallaxStrength = 1.0f,
-                particleCount = 40,
+                parallaxStrength = 1.1f,
+                particleCount = 50,
                 backgroundTop = 0xFF0C0C12,
                 backgroundBottom = 0xFF1A1520
+            )
+            ThemeType.NATURE -> ThemeConfig(
+                type = type,
+                parallaxStrength = 1.25f,
+                particleCount = 90,
+                backgroundTop = 0xFF0A1218,
+                backgroundBottom = 0xFF1A2E24
             )
         }
     }

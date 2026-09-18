@@ -7,5 +7,6 @@ object SceneFactory {
         ThemeType.SPACE -> SpaceSceneRenderer()
         ThemeType.AQUARIUM -> AquariumSceneRenderer()
         ThemeType.VEHICLE -> VehicleSceneRenderer()
+        ThemeType.NATURE -> NatureSceneRenderer()
     }
 }

@@ -2,13 +2,17 @@
 <resources>
     <string name="app_name">ScreenMotion</string>
     <string name="app_author">ScreenMotion</string>
-    <string name="tagline">Interactive live wallpapers</string>
+    <string name="tagline">Interactive live wallpapers · tilt · touch · play</string>
     <string name="wallpaper_description">Tilt, touch, and play — cinematic interactive wallpaper.</string>
     <string name="set_as_wallpaper">Set as live wallpaper</string>
     <string name="wallpaper_error">Could not open wallpaper picker. Long-press home screen → Wallpapers → Live wallpapers → ScreenMotion.</string>
     <string name="onboarding_title">Make it move</string>
-    <string name="onboarding_tilt">Tilt your phone to shift the scene (parallax &amp; current).</string>
-    <string name="onboarding_touch">Drag, swipe, and long-press for theme-specific magic.</string>
+    <string name="onboarding_tip1_title">1 · Tilt</string>
+    <string name="onboarding_tip1">Eğ / tilt — parallax layers, wind, and water current follow your phone.</string>
+    <string name="onboarding_tip2_title">2 · Drag</string>
+    <string name="onboarding_tip2">Sürükle / drag — fish, birds, and the leaf mascot rush toward your finger.</string>
+    <string name="onboarding_tip3_title">3 · Swipe &amp; hold</string>
+    <string name="onboarding_tip3">Kaydır / swipe for meteors &amp; boost · uzun bas / long-press for the friendly ship.</string>
     <string name="onboarding_got_it">Got it — let\'s play</string>
     <string name="choose_theme">Choose a theme</string>
 </resources>

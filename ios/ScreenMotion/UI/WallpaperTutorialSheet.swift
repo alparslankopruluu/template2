@@ -7,15 +7,35 @@ struct WallpaperTutorialSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("iOS cannot run realtime gyro/touch live wallpapers on the Lock/Home screen like Android. Use export + Photos instead.")
-                        .foregroundStyle(.secondary)
+                    Group {
+                        Text("EN — iOS cannot run realtime gyro/touch live wallpapers on Lock/Home like Android. Use export + Photos instead.")
+                        Text("TR — iOS’ta Android’deki gibi anlık jiroskop/dokunma canlı duvar kağıdı yok. Dışa aktarıp Photos’tan ayarlayın.")
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
 
-                    step(1, title: "Export a short clip", detail: "Tap Export in ScreenMotion. Allow Photos access when asked.")
-                    step(2, title: "Open Photos", detail: "Find the saved video (or still frames) in your library.")
-                    step(3, title: "Set as wallpaper", detail: "Share → Use as Wallpaper (or Settings → Wallpaper → Add New). Adjust and set for Lock Screen / Home Screen.")
-                    step(4, title: "Optional Live Photo", detail: "If you convert the clip to a Live Photo with a shortcut or third-party tool, you get a short motion wallpaper.")
+                    step(1,
+                         titleEN: "Export a short clip",
+                         titleTR: "Kısa klip dışa aktar",
+                         detailEN: "Tap Export in ScreenMotion. Allow Photos access when asked. Frames now match your chosen scene (Space / Aquarium / Vehicle / Nature).",
+                         detailTR: "Export’a dokunun. Photos izni verin. Kareler seçili sahneye göre üretilir.")
+                    step(2,
+                         titleEN: "Open Photos",
+                         titleTR: "Photos’u aç",
+                         detailEN: "Find the saved MP4 in your library.",
+                         detailTR: "Kayıtlı MP4’ü kitaplığınızda bulun.")
+                    step(3,
+                         titleEN: "Set as wallpaper",
+                         titleTR: "Duvar kağıdı yap",
+                         detailEN: "Share → Use as Wallpaper (or Settings → Wallpaper → Add New). Adjust and set for Lock / Home.",
+                         detailTR: "Paylaş → Duvar Kağıdı Olarak Kullan (veya Ayarlar → Duvar Kağıdı). Kilit / Ana ekran seçin.")
+                    step(4,
+                         titleEN: "Optional Live Photo",
+                         titleTR: "İsteğe bağlı Canlı Fotoğraf",
+                         detailEN: "Convert the clip to a Live Photo with a shortcut or third-party tool for short motion.",
+                         detailTR: "Kısa hareket için klipi Canlı Fotoğrafa dönüştürebilirsiniz.")
 
-                    Text("Tip: Keep the interactive preview open anytime — full Space / Aquarium / Vehicle play lives here.")
+                    Text("Tip EN: Keep the interactive preview open — full Space / Aquarium / Vehicle / Nature play lives here.\nİpucu TR: Tam etkileşim uygulamada — dört tema burada canlı.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .padding(.top, 8)
@@ -33,15 +53,17 @@ struct WallpaperTutorialSheet: View {
         .preferredColorScheme(.dark)
     }
 
-    private func step(_ n: Int, title: String, detail: String) -> some View {
+    private func step(_ n: Int, titleEN: String, titleTR: String, detailEN: String, detailTR: String) -> some View {
         HStack(alignment: .top, spacing: 14) {
             Text("\(n)")
                 .font(.headline.monospacedDigit())
                 .frame(width: 32, height: 32)
                 .background(Circle().fill(Color(red: 0.42, green: 0.55, blue: 1)))
             VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.headline)
-                Text(detail).font(.subheadline).foregroundStyle(.secondary)
+                Text(titleEN).font(.headline)
+                Text(titleTR).font(.subheadline.weight(.semibold)).foregroundStyle(Color(red: 0.7, green: 0.75, blue: 0.95))
+                Text(detailEN).font(.subheadline).foregroundStyle(.secondary)
+                Text(detailTR).font(.caption).foregroundStyle(Color(white: 0.45))
             }
         }
     }

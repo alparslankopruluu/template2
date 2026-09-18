@@ -16,6 +16,8 @@ struct SceneCanvasView: View {
                     AquariumScene.draw(context: context, size: size, time: t, tiltX: motion.tiltX, tiltY: motion.tiltY, touch: touch)
                 case .vehicle:
                     VehicleScene.draw(context: context, size: size, time: t, tiltX: motion.tiltX, tiltY: motion.tiltY, touch: touch)
+                case .nature:
+                    NatureScene.draw(context: context, size: size, time: t, tiltX: motion.tiltX, tiltY: motion.tiltY, touch: touch)
                 }
             }
             .gesture(

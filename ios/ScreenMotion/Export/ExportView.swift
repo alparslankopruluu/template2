@@ -36,7 +36,7 @@ struct ExportView: View {
                 .tint(Color(red: 0.42, green: 0.55, blue: 1))
                 .disabled(busy)
 
-                Text("AVAssetWriter writes a few animated frames as an MP4 placeholder. Use the tutorial sheet to set it as wallpaper.")
+                Text("AVAssetWriter writes ~3s of clearer scene-specific frames (Space / Aquarium / Vehicle / Nature). Use the tutorial sheet to set it as wallpaper.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
