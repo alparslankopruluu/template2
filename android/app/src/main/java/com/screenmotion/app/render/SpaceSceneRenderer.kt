@@ -213,6 +213,8 @@ class SpaceSceneRenderer : SceneRenderer {
             )
             canvas.drawCircle(motion.touchX, motion.touchY, 110f, glowPaint)
         }
+
+        AdBillboardPainter.drawIfFree(canvas, w, h, com.screenmotion.app.data.ThemeType.SPACE, time)
     }
 
     private fun drawPlanet(canvas: Canvas, x: Float, y: Float, r: Float, color: Int, ring: Boolean) {

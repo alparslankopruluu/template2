@@ -64,3 +64,9 @@ Do not invent a separate product name; use ScreenMotion.
 - Procedural SFX + mute (Android ToneGenerator, iOS generated WAV)
 - Vehicle variants: sports / truck / motorcycle / helicopter + picker UI
 - In-app Showcase (store preview) + `store/` listing markdown EN+TR
+
+## Mock monetization (v5 demo)
+- All themes free; Sports free; Truck/Bike/Heli → Pro
+- Free shows theme-embedded ad billboards; Pro hides them
+- Prices (display only): 79,99 TL/mo, 399,99 TL/yr (“En iyi değer”); no trial; cancel anytime
+- `is_pro` SharedPreferences / UserDefaults — **no real billing**

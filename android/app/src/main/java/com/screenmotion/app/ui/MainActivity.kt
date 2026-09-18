@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.screenmotion.app.R
 import com.screenmotion.app.audio.SfxKind
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var vehicleLabel: TextView
     private lateinit var vehicleScroll: HorizontalScrollView
     private lateinit var btnMute: ImageButton
+    private lateinit var btnPro: MaterialButton
+    private lateinit var btnMockPro: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +57,24 @@ class MainActivity : AppCompatActivity() {
         vehicleLabel = findViewById(R.id.vehicleLabel)
         vehicleScroll = findViewById(R.id.vehicleScroll)
         btnMute = findViewById(R.id.btnMute)
+        btnPro = findViewById(R.id.btnPro)
+        btnMockPro = findViewById(R.id.btnMockPro)
 
-        findViewById<TextView>(R.id.titleText).text = getString(R.string.app_name)
+        val titleText = findViewById<TextView>(R.id.titleText)
+        titleText.text = getString(R.string.app_name)
         findViewById<TextView>(R.id.subtitleText).text = getString(R.string.tagline)
+
+        // Debug: long-press title toggles mock Pro
+        titleText.setOnLongClickListener {
+            toggleMockPro()
+            true
+        }
 
         setupThemeCards()
         setupVehicleChips()
         updateVehicleVisibility(repo.selectedTheme)
         updateMuteIcon()
+        updateProUi()
         preview.setTheme(repo.selectedTheme)
 
         btnMute.setOnClickListener {
@@ -69,6 +82,20 @@ class MainActivity : AppCompatActivity() {
             updateMuteIcon()
             lightHaptic()
             if (!repo.soundMuted) SfxPlayer.play(this, SfxKind.THEME_SELECT)
+        }
+
+        btnPro.setOnClickListener {
+            lightHaptic()
+            if (repo.isPro) {
+                Toast.makeText(this, R.string.pro_active, Toast.LENGTH_SHORT).show()
+            } else {
+                openPaywall()
+            }
+        }
+
+        btnMockPro.setOnClickListener {
+            lightHaptic()
+            toggleMockPro()
         }
 
         findViewById<Button>(R.id.btnSetWallpaper).setOnClickListener {
@@ -98,6 +125,35 @@ class MainActivity : AppCompatActivity() {
         } else {
             onboarding.isVisible = false
         }
+    }
+
+    private fun openPaywall() {
+        PaywallSheet.show(this) {
+            updateProUi()
+            setupVehicleChips()
+            preview.setTheme(repo.selectedTheme)
+        }
+    }
+
+    private fun toggleMockPro() {
+        repo.isPro = !repo.isPro
+        Toast.makeText(
+            this,
+            if (repo.isPro) R.string.mock_pro_on else R.string.mock_pro_off,
+            Toast.LENGTH_SHORT
+        ).show()
+        updateProUi()
+        setupVehicleChips()
+        if (!repo.isPro && repo.selectedTheme == ThemeType.VEHICLE) {
+            preview.setVehicle(repo.selectedVehicle)
+        }
+        preview.setTheme(repo.selectedTheme)
+    }
+
+    private fun updateProUi() {
+        btnPro.text = getString(if (repo.isPro) R.string.pro_active else R.string.pro_button)
+        btnMockPro.text = getString(R.string.mock_pro_toggle)
+        btnMockPro.alpha = if (repo.isPro) 1f else 0.7f
     }
 
     private fun updateMuteIcon() {
@@ -150,6 +206,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupVehicleChips() {
         vehicleRow.removeAllViews()
+        // Ensure free vehicle if locked selection
+        if (!repo.canUseVehicle(repo.selectedVehicle)) {
+            repo.selectedVehicle = VehicleType.SPORTS_CAR
+        }
         for (v in VehicleType.entries) {
             val chip = layoutInflater.inflate(R.layout.item_vehicle_chip, vehicleRow, false) as MaterialCardView
             chip.findViewById<TextView>(R.id.vehicleEmoji).text = v.emoji
@@ -157,15 +217,25 @@ class MainActivity : AppCompatActivity() {
             val thumb = chip.findViewById<android.widget.ImageView>(R.id.vehicleThumb)
             thumb.setImageResource(vehicleThumbRes(v))
             thumb.clipToOutline = true
-            updateVehicleChip(chip, v == repo.selectedVehicle)
+            val lock = chip.findViewById<TextView>(R.id.vehicleLock)
+            val locked = v.requiresPro && !repo.isPro
+            lock.isVisible = locked
+            updateVehicleChip(chip, v == repo.selectedVehicle, locked)
             chip.setOnClickListener {
                 lightHaptic()
+                if (locked) {
+                    openPaywall()
+                    return@setOnClickListener
+                }
                 SfxPlayer.play(this, SfxKind.THEME_SELECT)
                 repo.selectedVehicle = v
                 preview.setVehicle(v)
                 for (i in 0 until vehicleRow.childCount) {
                     val c = vehicleRow.getChildAt(i) as MaterialCardView
-                    updateVehicleChip(c, VehicleType.entries[i] == v)
+                    val type = VehicleType.entries[i]
+                    val typeLocked = type.requiresPro && !repo.isPro
+                    c.findViewById<TextView>(R.id.vehicleLock).isVisible = typeLocked
+                    updateVehicleChip(c, type == v, typeLocked)
                 }
             }
             vehicleRow.addView(chip)
@@ -185,10 +255,14 @@ class MainActivity : AppCompatActivity() {
         vehicleScroll.isVisible = show
     }
 
-    private fun updateVehicleChip(card: MaterialCardView, selected: Boolean) {
+    private fun updateVehicleChip(card: MaterialCardView, selected: Boolean, locked: Boolean) {
         card.strokeWidth = if (selected) 2 else 1
         card.strokeColor = getColor(if (selected) R.color.accent else R.color.stroke)
-        card.alpha = if (selected) 1f else 0.75f
+        card.alpha = when {
+            locked -> 0.55f
+            selected -> 1f
+            else -> 0.75f
+        }
     }
 
     private fun updateCardSelection(card: MaterialCardView, selected: Boolean) {
@@ -228,10 +302,6 @@ class MainActivity : AppCompatActivity() {
             .start()
     }
 
-    /**
-     * Home: live wallpaper chooser. Lock: render (or static asset) → FLAG_LOCK;
-     * on failure save PNG + open picker; then show Huawei guide.
-     */
     private fun applyWallpaperHomeAndLock() {
         openLiveWallpaperChooser()
         val appCtx = applicationContext
@@ -271,5 +341,7 @@ class MainActivity : AppCompatActivity() {
         preview.setTheme(repo.selectedTheme)
         updateVehicleVisibility(repo.selectedTheme)
         updateMuteIcon()
+        updateProUi()
+        setupVehicleChips()
     }
 }

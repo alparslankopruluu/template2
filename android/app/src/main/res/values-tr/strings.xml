@@ -37,5 +37,26 @@
     <string name="showcase_feat_mascots">✨ İfadeli maskotlar — balık, gemi, araçlar, kuşlar &amp; yaprak.</string>
     <string name="showcase_feat_sfx">🔊 Eğlenceli SFX — istediğin zaman sessiz; boost, meteor, kabarcık.</string>
     <string name="showcase_gallery_title">Tema galerisi</string>
-    <string name="showcase_footer">Mağaza önizleme · v4 · Apple esintili arayüz</string>
+    <string name="showcase_footer">Mağaza önizleme · v5 · Apple esintili arayüz</string>
+
+    <!-- Mock Pro / paywall (TR) -->
+    <string name="pro_button">Pro</string>
+    <string name="pro_active">Pro ✓</string>
+    <string name="mock_pro_toggle">Mock Pro aç/kapat</string>
+    <string name="mock_pro_on">Mock Pro AÇIK</string>
+    <string name="mock_pro_off">Mock Pro KAPALI</string>
+    <string name="vehicle_locked">Pro</string>
+    <string name="ad_sponsored">Sponsorlu</string>
+    <string name="ad_sample_brand">Örnek Marka</string>
+    <string name="paywall_title">ScreenMotion Pro</string>
+    <string name="paywall_subtitle">Reklamsız sahneler ve daha zengin araçlar — eğlence kalsın, panolar gitsin.</string>
+    <string name="paywall_bullet_ads">✦ Temaya gömülü reklam panolarını gizle</string>
+    <string name="paywall_bullet_vehicles">✦ Kamyon, Motor ve Helikopter’i aç</string>
+    <string name="paywall_bullet_themes">✦ 4 tema sonsuza kadar ücretsiz</string>
+    <string name="paywall_yearly">399,99 TL / yıl</string>
+    <string name="paywall_monthly">79,99 TL / ay</string>
+    <string name="paywall_best_value">En iyi değer</string>
+    <string name="paywall_footnote">Deneme yok. İstediğin zaman iptal et.</string>
+    <string name="paywall_not_now">Şimdi değil</string>
+    <string name="paywall_mock_success">Mock satın alma başarılı — Pro açıldı</string>
 </resources>

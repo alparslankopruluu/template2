@@ -38,5 +38,26 @@
     <string name="showcase_feat_mascots">✨ Expressive mascots — fish, ship, vehicles, birds &amp; leaf.</string>
     <string name="showcase_feat_sfx">🔊 Playful SFX — mute anytime; boost, meteors, bubbles &amp; more.</string>
     <string name="showcase_gallery_title">Theme gallery</string>
-    <string name="showcase_footer">Store preview · v4 · Apple-inspired UI</string>
+    <string name="showcase_footer">Store preview · v5 · Apple-inspired UI</string>
+
+    <!-- Mock Pro / paywall (EN) -->
+    <string name="pro_button">Pro</string>
+    <string name="pro_active">Pro ✓</string>
+    <string name="mock_pro_toggle">Mock Pro on/off</string>
+    <string name="mock_pro_on">Mock Pro ON</string>
+    <string name="mock_pro_off">Mock Pro OFF</string>
+    <string name="vehicle_locked">Pro</string>
+    <string name="ad_sponsored">Sponsored</string>
+    <string name="ad_sample_brand">Sample Brand</string>
+    <string name="paywall_title">ScreenMotion Pro</string>
+    <string name="paywall_subtitle">Ad-free scenes and richer vehicles — keep the fun, lose the billboards.</string>
+    <string name="paywall_bullet_ads">✦ Hide theme-embedded ad billboards</string>
+    <string name="paywall_bullet_vehicles">✦ Unlock Truck, Bike &amp; Helicopter</string>
+    <string name="paywall_bullet_themes">✦ All 4 themes stay free forever</string>
+    <string name="paywall_yearly">399,99 TL / year</string>
+    <string name="paywall_monthly">79,99 TL / month</string>
+    <string name="paywall_best_value">Best value</string>
+    <string name="paywall_footnote">No free trial. Cancel anytime.</string>
+    <string name="paywall_not_now">Not now</string>
+    <string name="paywall_mock_success">Mock purchase success — Pro unlocked</string>
 </resources>

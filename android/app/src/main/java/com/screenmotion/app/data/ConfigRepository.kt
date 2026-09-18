@@ -24,7 +24,19 @@ class ConfigRepository(context: Context) {
         get() = prefs.getBoolean(KEY_SOUND_MUTED, false)
         set(value) = prefs.edit().putBoolean(KEY_SOUND_MUTED, value).apply()
 
+    /** Mock Pro flag — default false. No real billing. */
+    var isPro: Boolean
+        get() = prefs.getBoolean(KEY_IS_PRO, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_IS_PRO, value).apply()
+            if (!value && selectedVehicle.requiresPro) {
+                selectedVehicle = VehicleType.SPORTS_CAR
+            }
+        }
+
     fun themeConfig(): ThemeConfig = ThemeConfig.forTheme(selectedTheme)
+
+    fun canUseVehicle(type: VehicleType): Boolean = !type.requiresPro || isPro
 
     companion object {
         private const val PREFS_NAME = "screenmotion_prefs"
@@ -32,6 +44,7 @@ class ConfigRepository(context: Context) {
         private const val KEY_VEHICLE = "selected_vehicle"
         private const val KEY_ONBOARDING = "onboarding_done"
         private const val KEY_SOUND_MUTED = "sound_muted"
+        private const val KEY_IS_PRO = "is_pro"
 
         @Volatile
         private var instance: ConfigRepository? = null

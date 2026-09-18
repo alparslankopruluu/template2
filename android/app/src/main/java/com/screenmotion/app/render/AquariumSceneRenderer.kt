@@ -208,6 +208,8 @@ class AquariumSceneRenderer : SceneRenderer {
             fishPaint.color = ColorUtils.withAlpha(0xFFFFF8C0.toInt(), 210)
             canvas.drawCircle(motion.touchX, motion.touchY, 9f, fishPaint)
         }
+
+        AdBillboardPainter.drawIfFree(canvas, w, h, com.screenmotion.app.data.ThemeType.AQUARIUM, time)
     }
 
     private fun drawSand(canvas: Canvas) {

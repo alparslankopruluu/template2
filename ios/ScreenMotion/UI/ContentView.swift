@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var showTutorial = false
     @State private var showExport = false
     @State private var showShowcase = false
+    @State private var showPaywall = false
 
     var body: some View {
         ZStack {
@@ -61,6 +62,10 @@ struct ContentView: View {
         .sheet(isPresented: $showShowcase) {
             ShowcaseView()
         }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+                .environmentObject(settings)
+        }
     }
 
     private var header: some View {
@@ -74,6 +79,23 @@ struct ContentView: View {
                     .foregroundStyle(SMColor.textSecondary)
             }
             Spacer()
+            Button {
+                if !settings.isPro {
+                    showPaywall = true
+                    SoundEffects.shared.play(.themeSelect)
+                }
+            } label: {
+                Text(settings.isPro ? "Pro ✓" : "Pro")
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(SMColor.accent)
+                    .padding(.horizontal, 8)
+            }
+            .simultaneousGesture(
+                LongPressGesture(minimumDuration: 0.6).onEnded { _ in
+                    settings.isPro.toggle()
+                    SoundEffects.shared.play(.themeSelect)
+                }
+            )
             Button {
                 settings.soundMuted.toggle()
                 if !settings.soundMuted {
@@ -97,12 +119,48 @@ struct ContentView: View {
             motion: motion,
             touch: $touch
         )
+        .overlay(alignment: billboardAlignment) {
+            if !settings.isPro {
+                mockBillboard
+            }
+        }
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .stroke(SMColor.stroke, lineWidth: 1)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var billboardAlignment: Alignment {
+        switch settings.selectedTheme {
+        case .vehicle, .aquarium: return .topTrailing
+        case .space: return .topLeading
+        case .nature: return .bottomLeading
+        }
+    }
+
+    private var mockBillboard: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Sponsorlu")
+                .font(.system(size: 9, weight: .medium))
+                .foregroundStyle(.white.opacity(0.7))
+            Text("Örnek Marka")
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(.white.opacity(0.9))
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Color.black.opacity(0.35))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+        )
+        .padding(12)
+        .allowsHitTesting(false)
     }
 
     private var themePicker: some View {
@@ -135,7 +193,12 @@ struct ContentView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(VehicleType.allCases) { v in
+                        let locked = v.requiresPro && !settings.isPro
                         Button {
+                            if locked {
+                                showPaywall = true
+                                return
+                            }
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                                 settings.selectedVehicle = v
                             }
@@ -146,6 +209,11 @@ struct ContentView: View {
                                 Text(v.rawValue)
                                     .font(.caption.weight(.semibold))
                                     .foregroundStyle(SMColor.textPrimary)
+                                if locked {
+                                    Image(systemName: "lock.fill")
+                                        .font(.caption2)
+                                        .foregroundStyle(SMColor.textSecondary)
+                                }
                             }
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
@@ -162,7 +230,7 @@ struct ContentView: View {
                                             )
                                     )
                             )
-                            .opacity(settings.selectedVehicle == v ? 1 : 0.75)
+                            .opacity(locked ? 0.55 : (settings.selectedVehicle == v ? 1 : 0.75))
                         }
                         .buttonStyle(.plain)
                     }

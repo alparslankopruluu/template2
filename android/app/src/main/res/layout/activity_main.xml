@@ -43,6 +43,19 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPro"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/pro_button"
+                android:textAllCaps="false"
+                android:textColor="@color/accent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/btnMute"
                 android:layout_width="44dp"
@@ -117,16 +130,34 @@
                 android:orientation="horizontal" />
         </HorizontalScrollView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnHuaweiGuide"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="6dp"
-            android:text="@string/huawei_guide_button"
-            android:textAllCaps="false"
-            android:textColor="@color/accent"
-            android:textSize="13sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHuaweiGuide"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/huawei_guide_button"
+                android:textAllCaps="false"
+                android:textColor="@color/accent"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMockPro"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/mock_pro_toggle"
+                android:textAllCaps="false"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

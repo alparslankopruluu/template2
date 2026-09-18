@@ -98,6 +98,11 @@ enum VehicleType: String, CaseIterable, Identifiable {
         case .helicopter: return 2.8
         }
     }
+
+    /// Free: Sports only. Truck / Bike / Heli → mock Pro.
+    var requiresPro: Bool {
+        self != .sportsCar
+    }
 }
 
 final class AppSettings: ObservableObject {
@@ -117,6 +122,16 @@ final class AppSettings: ObservableObject {
         }
     }
 
+    /// Mock Pro — UserDefaults only. No StoreKit / AdMob.
+    @Published var isPro: Bool {
+        didSet {
+            UserDefaults.standard.set(isPro, forKey: "is_pro")
+            if !isPro && selectedVehicle.requiresPro {
+                selectedVehicle = .sportsCar
+            }
+        }
+    }
+
     init() {
         let raw = UserDefaults.standard.string(forKey: "selected_theme") ?? ThemeType.space.rawValue
         selectedTheme = ThemeType(rawValue: raw) ?? .space
@@ -124,6 +139,10 @@ final class AppSettings: ObservableObject {
         selectedVehicle = VehicleType(rawValue: vRaw) ?? .sportsCar
         onboardingDone = UserDefaults.standard.bool(forKey: "onboarding_done")
         soundMuted = UserDefaults.standard.bool(forKey: "sound_muted")
+        isPro = UserDefaults.standard.bool(forKey: "is_pro")
         SoundEffects.shared.isMuted = soundMuted
+        if !isPro && selectedVehicle.requiresPro {
+            selectedVehicle = .sportsCar
+        }
     }
 }

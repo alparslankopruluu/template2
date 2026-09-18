@@ -272,6 +272,8 @@ class NatureSceneRenderer : SceneRenderer {
             )
             canvas.drawCircle(motion.touchX, motion.touchY, 70f, glowPaint)
         }
+
+        AdBillboardPainter.drawIfFree(canvas, w, h, com.screenmotion.app.data.ThemeType.NATURE, time)
     }
 
     private fun drawHills(canvas: Canvas, motion: MotionState, depth: Int) {

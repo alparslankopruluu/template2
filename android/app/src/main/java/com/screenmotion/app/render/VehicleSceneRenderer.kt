@@ -225,6 +225,8 @@ class VehicleSceneRenderer(
             )
             canvas.drawRect(0f, 0f, w.toFloat(), h.toFloat(), glowPaint)
         }
+
+        AdBillboardPainter.drawIfFree(canvas, w, h, com.screenmotion.app.data.ThemeType.VEHICLE, time)
     }
 
     private fun drawNeonTrail(canvas: Canvas) {
